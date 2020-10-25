@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-require("../connectionDB");
+require("../Database");
 
 const user = new Schema({
   username: String,

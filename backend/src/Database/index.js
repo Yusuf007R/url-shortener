@@ -5,6 +5,7 @@ const dbUrl = require("../configs").dbUrl;
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 
 const db = mongoose.connection;
