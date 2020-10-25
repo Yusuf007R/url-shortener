@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-require("../db");
+require("../connectionDB");
 
 const refreshToken = new Schema({
   username: String,

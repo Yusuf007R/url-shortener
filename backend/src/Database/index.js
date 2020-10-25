@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const dbUrl = "mongodb://localhost:27017/urlShortener";
+
+const dbUrl = require("../configs").dbUrl;
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
