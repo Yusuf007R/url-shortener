@@ -1,9 +1,10 @@
 const { Schema, model } = require("mongoose");
-require("../Database");
+require("../database");
 const shortUrl = new Schema({
   fullUrl: String,
   shortUrl: {
     type: String,
+    index: true,
     unique: true,
   },
 });
