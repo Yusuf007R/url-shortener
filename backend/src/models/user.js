@@ -1,8 +1,12 @@
 const { Schema, model } = require("mongoose");
-require("../Database");
+require("../database");
 
 const user = new Schema({
-  username: String,
+  username: {
+    type: String,
+    index: true,
+    unique: true,
+  },
   email: String,
   password: String,
 });
