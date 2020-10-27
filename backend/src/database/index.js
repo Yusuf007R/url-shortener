@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const dbUrl = require("../configs").dbUrl;
+const { dbUrl } = require('../configs');
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -10,6 +10,6 @@ mongoose.connect(dbUrl, {
 
 const db = mongoose.connection;
 
-db.once("open", (_) => {
-  console.log("Database is connected to:", dbUrl);
+db.once('open', (_) => {
+  console.log('Database is connected to:', dbUrl);
 });

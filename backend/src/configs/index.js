@@ -1,14 +1,14 @@
-require("dotenv").config();
+require('dotenv').config();
 
-//DATABASE URL
+// DATABASE URL
 
-const dbUrl = "mongodb://localhost:27017/urlShortener";
+const dbUrl = 'mongodb://localhost:27017/urlShortener';
 
-//API PORT
+// API PORT
 
 const port = 3001;
 
-//ENV KEYS
+// ENV KEYS
 
 const privateKey = {
   refresh: process.env.privateRefreshTokenKey,

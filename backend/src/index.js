@@ -1,8 +1,8 @@
-const app = require("./server");
-const port = require("./configs").port;
-require("./database");
-require("./routes/auth");
-require("./routes/urlShortener");
+const app = require('./server');
+const { port } = require('./configs');
+require('./database');
+require('./routes/auth');
+require('./routes/urlShortener');
 
 app.listen(port, () => {
   console.log(`listening in port:${port}`);
