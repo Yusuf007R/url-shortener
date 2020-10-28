@@ -57,7 +57,6 @@ app.post('/auth/login', async (req, res) => {
 });
 
 app.post('/auth/accesstoken', async (req, res) => {
-  console.log(req.ip);
   let token = req.headers.authorization;
   if (token.startsWith('Bearer ')) {
     token = token.slice(7, token.length);
