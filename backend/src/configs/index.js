@@ -2,7 +2,7 @@ require('dotenv').config();
 
 // DATABASE URL
 
-const dbUrl = 'mongodb://localhost:27017/urlShortener';
+const { dbUrl } = process.env;
 
 // API PORT
 

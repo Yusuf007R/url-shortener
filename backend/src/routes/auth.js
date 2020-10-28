@@ -23,12 +23,12 @@ function generateAccessToken(data) {
 
 app.post('/auth/register', async (req, res) => {
   const { password } = req.body;
-  const hash = bcrypt.hash(password, 10);
+  const hash = await bcrypt.hash(password, 10);
   const newUser = new User({
     username: req.body.username,
     password: hash,
   });
-  newUser.save((error) => {
+  await newUser.save((error) => {
     if (error) {
       if (error.code === 11000) {
         return res.status(409).send('username already taken');

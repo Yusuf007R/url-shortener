@@ -10,6 +10,6 @@ mongoose.connect(dbUrl, {
 
 const db = mongoose.connection;
 
-db.once('open', (_) => {
+db.once('open', () => {
   console.log('Database is connected to:', dbUrl);
 });
