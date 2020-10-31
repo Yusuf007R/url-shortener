@@ -8,10 +8,6 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:3001/4rz5 HTTP/1.1
-
-
-###
 
 POST http://localhost:3001/auth/register HTTP/1.1
 Content-Type: application/json

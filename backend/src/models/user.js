@@ -9,6 +9,7 @@ const user = new Schema({
   },
   email: String,
   password: String,
+  short: [{ type: Schema.Types.ObjectId, ref: 'shortUrl' }],
 });
 
 module.exports = model('user', user);

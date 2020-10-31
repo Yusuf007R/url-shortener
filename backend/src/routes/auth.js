@@ -17,11 +17,11 @@ const RefreshToken = require('../models/refreshToken');
 
 function generateAccessToken(data) {
   return jwt.sign(data, privateKey.access, {
-    expiresIn: '35s',
+    expiresIn: '30m',
   });
 }
 
-app.post('/auth/register', async (req, res) => {
+app.post('/api/auth/register', async (req, res) => {
   const { password } = req.body;
   const hash = await bcrypt.hash(password, 10);
   const newUser = new User({
@@ -38,7 +38,7 @@ app.post('/auth/register', async (req, res) => {
   });
 });
 
-app.post('/auth/login', async (req, res) => {
+app.post('/api/auth/login', async (req, res) => {
   const user = await User.findOne({ username: req.body.username });
   if (user == null) return res.status(400).send('cannot find user');
   const match = await bcrypt.compare(req.body.password, user.password);
@@ -56,7 +56,7 @@ app.post('/auth/login', async (req, res) => {
   return res.status(403).send('wrong password');
 });
 
-app.post('/auth/accesstoken', async (req, res) => {
+app.post('/api/auth/accesstoken', async (req, res) => {
   let token = req.headers.authorization;
   if (token.startsWith('Bearer ')) {
     token = token.slice(7, token.length);
