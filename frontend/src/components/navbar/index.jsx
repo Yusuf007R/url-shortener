@@ -1,11 +1,19 @@
 import React from "react";
-import { AnchorLogin, Navbar, Img, AnchorCenter } from "./style";
+import {
+  AnchorLogin,
+  Navbar,
+  Img,
+  AnchorCenter,
+  DivSpaceAround,
+} from "./style";
+
+import logo from "../../assest/logo.png";
 
 function NavBar(props) {
   return (
     <Navbar>
-      <Img src="https://i.imgur.com/R7ZGbqj.png" alt="xd" />
-      <div>
+      <Img src={logo} alt="xd" />
+      <DivSpaceAround>
         <AnchorCenter href="https://developer.mozilla.org">Home</AnchorCenter>
         <AnchorCenter href="https://developer.mozilla.org">
           Features
@@ -13,11 +21,11 @@ function NavBar(props) {
         <AnchorCenter href="https://developer.mozilla.org">
           Pricing
         </AnchorCenter>
-      </div>
-      <div>
+      </DivSpaceAround>
+      <DivSpaceAround>
         <AnchorLogin href="https://developer.mozilla.org">Log in</AnchorLogin>
         <AnchorLogin href="https://developer.mozilla.org">Sign up</AnchorLogin>
-      </div>
+      </DivSpaceAround>
     </Navbar>
   );
 }

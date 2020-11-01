@@ -9,25 +9,31 @@ export const Navbar = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 `;
 
 export const Img = styled.img`
-  width: 200px;
-  margin-left: 20px;
+  width: 100px;
 `;
 
 export const AnchorCenter = styled.a`
-  margin: 10px;
   text-decoration: none;
   color: gray;
   font-size: 18px;
 `;
 
-export const AnchorLogin = styled.a`
-  margin: 10px;
+export const AnchorLogin = styled.button`
+  background-color: #786fa6;
   font-size: 18px;
   text-decoration: none;
-  color: gray;
+  color: white;
+  padding: 8px;
+  border-radius: 15%;
+`;
+
+export const DivSpaceAround = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: ${(props) => props.width || "250px"};
 `;
