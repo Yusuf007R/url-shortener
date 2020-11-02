@@ -17,6 +17,10 @@ export const Img = styled.img`
   width: 100px;
 `;
 
+export const ImgContainer = styled.div`
+  width: 200px;
+`;
+
 export const AnchorCenter = styled.a`
   text-decoration: none;
   color: gray;
@@ -24,12 +28,12 @@ export const AnchorCenter = styled.a`
 `;
 
 export const AnchorLogin = styled.button`
-  background-color: #786fa6;
+  border: 1px solid #d3d4d7;
+  background-color: #574b90;
   font-size: 18px;
-  text-decoration: none;
+  padding: 12px;
+  border-radius: 5px;
   color: white;
-  padding: 8px;
-  border-radius: 15%;
 `;
 
 export const DivSpaceAround = styled.div`
