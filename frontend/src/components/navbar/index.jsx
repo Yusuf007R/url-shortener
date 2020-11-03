@@ -9,12 +9,15 @@ import {
 } from "./style";
 
 import logo from "../../assest/logo.png";
+import { Link } from "react-router-dom";
 
 function NavBar(props) {
   return (
     <Navbar>
       <ImgContainer>
-        <Img src={logo} alt="xd" />
+        <Link to="/">
+          <Img src={logo} alt="xd" />
+        </Link>
       </ImgContainer>
       <DivSpaceAround>
         <AnchorCenter href="https://developer.mozilla.org">Home</AnchorCenter>
@@ -26,8 +29,12 @@ function NavBar(props) {
         </AnchorCenter>
       </DivSpaceAround>
       <DivSpaceAround width={"200px"}>
-        <AnchorLogin href="https://developer.mozilla.org">Log in</AnchorLogin>
-        <AnchorLogin href="https://developer.mozilla.org">Sign up</AnchorLogin>
+        <Link to="/login">
+          <AnchorLogin>Log in</AnchorLogin>
+        </Link>
+        <Link to="/register">
+          <AnchorLogin>Sign up</AnchorLogin>
+        </Link>
       </DivSpaceAround>
     </Navbar>
   );

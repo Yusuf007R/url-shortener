@@ -2,4 +2,8 @@
 
 const apiUrl = "http://localhost:3001/api/";
 
-export { apiUrl };
+//generic error
+
+const genericError = "Ups! try again";
+
+export { apiUrl, genericError };

@@ -17,10 +17,14 @@ export const FormInput = styled.input`
   padding: 10px;
 `;
 
-export const Anchor = styled.a`
+export const Anchor = styled.span`
   text-decoration: underline;
   color: #574b90;
   font-weight: 600;
+  float: ${(props) => props.float || "none"};
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const DivContainerHeader = styled.div`
@@ -44,20 +48,11 @@ export const SubmitButton = styled.button`
   color: white;
 `;
 
-export const Test = styled.p`
+export const Separator = styled.p`
   margin-top: 20px;
   content: "";
   display: block;
   width: 450px;
   height: 1px;
   background: #dde0e2;
-`;
-
-export const Test2 = styled.a`
-  padding: 0px;
-  margin: 0px;
-  text-decoration: underline;
-  color: #574b90;
-  font-weight: 600;
-  float: right;
 `;

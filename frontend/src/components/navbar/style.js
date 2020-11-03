@@ -27,7 +27,7 @@ export const AnchorCenter = styled.a`
   font-size: 18px;
 `;
 
-export const AnchorLogin = styled.button`
+export const AnchorLogin = styled.p`
   border: 1px solid #d3d4d7;
   background-color: #574b90;
   font-size: 18px;
