@@ -10,25 +10,18 @@ import {
   Test2,
 } from "./style";
 
-import axios from "axios";
+import { loginRequest } from "../../services/api";
+
+// import axios from "axios";
 
 function Login(props) {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
-  const SubmitHandler = (event) => {
+  const SubmitHandler = async (event) => {
     event.preventDefault();
-    axios
-      .post("http://localhost:3001/api/auth/login", {
-        username,
-        password,
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const xd = await loginRequest(username, password);
+    console.log(xd);
   };
   return (
     <DivContainer>
