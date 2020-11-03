@@ -40,7 +40,7 @@ app.post('/api/auth/register', async (req, res) => {
 
 app.post('/api/auth/login', async (req, res) => {
   const user = await User.findOne({ username: req.body.username });
-  if (user == null) return res.status(400).send('cannot find user');
+  if (user == null) return res.status(409).send('cannot find user');
   const match = await bcrypt.compare(req.body.password, user.password);
   if (match) {
     const info = { user: user.username };
