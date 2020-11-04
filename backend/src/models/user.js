@@ -7,7 +7,11 @@ const user = new Schema({
     index: true,
     unique: true,
   },
-  email: String,
+  email: {
+    type: String,
+    index: true,
+    unique: true,
+  },
   password: String,
   short: [{ type: Schema.Types.ObjectId, ref: 'shortUrl' }],
 });

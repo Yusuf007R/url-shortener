@@ -15,4 +15,13 @@ const privateKey = {
   access: process.env.privateAccessTokenKey,
 };
 
-module.exports = { dbUrl, port, privateKey };
+// GENERIC ERROR
+
+const genericError = 'Ups! try again';
+
+module.exports = {
+  dbUrl,
+  port,
+  privateKey,
+  genericError,
+};
