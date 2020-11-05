@@ -52,11 +52,14 @@ app.post('/api/auth/register', async (req, res) => {
 
 app.post('/api/auth/login', async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({ username: req.body.username }).select(
+      '-short',
+    );
+    console.log(user);
     if (user == null) return res.status(409).send('cannot find user');
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) {
-      const info = { user: user.username };
+      const info = { user: user.username, userID: user.id };
       const accessToken = generateAccessToken(info);
       const refreshToken = jwt.sign(info, privateKey.refresh);
       const newRefreshToken = new RefreshToken({

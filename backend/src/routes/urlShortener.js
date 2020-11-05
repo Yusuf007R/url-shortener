@@ -12,17 +12,15 @@ async function shortUrlGenerator(info) {
   const newShortUrl = new ShortUrl({
     fullUrl: info.fullUrl,
     shortUrl: nanoid(6),
+    user: info.user,
+    userID: info.userID,
   });
   await newShortUrl.save((err) => {
     if (err) shortUrlGenerator();
   });
-  const userx = await User.findOne({ username: info.user });
-  userx.short.push(newShortUrl.id);
-  await userx.save();
-  const xd = await User.findOne({ username: info.user }).populate('short');
-  console.log(xd);
-  const xdd = await User.findOne({ username: info.user });
-  console.log(xdd);
+  const user = await User.findOne({ username: info.user });
+  user.short.push(newShortUrl.id);
+  await user.save();
   return newShortUrl;
 }
 
@@ -44,9 +42,11 @@ app.post('/api/shortUrl', async (req, res) => {
     if (jwtValidated.expiredToken) return res.status(403).send('expiredToken');
     return res.status(403).send('invalidToken');
   }
-
-  // const { fullUrl } = req.body;
-  const info = { fullUrl: req.body.fullUrl, user: jwtValidated.decoded.user };
+  const info = {
+    fullUrl: req.body.fullUrl,
+    user: jwtValidated.decoded.user,
+    userID: jwtValidated.decoded.userID,
+  };
   const shorturl = await shortUrlGenerator(info);
   return res.status(200).json(shorturl.shortUrl);
 });

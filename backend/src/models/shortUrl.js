@@ -3,6 +3,8 @@ require('../database');
 
 const shortUrl = new Schema({
   fullUrl: String,
+  user: String,
+  userID: String,
   shortUrl: {
     type: String,
     index: true,
