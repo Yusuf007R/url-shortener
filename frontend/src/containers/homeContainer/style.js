@@ -24,3 +24,20 @@ export const Form = styled.form`
   align-items: center;
   width: 100%;
 `;
+
+export const Input = styled.input`
+  width: 45%;
+  border-radius: 5px;
+  height: 65px;
+  box-sizing: border-box;
+  border: 2px solid gray;
+`;
+
+export const Button = styled.button`
+  font-size: 25px;
+  height: 65px;
+  border-radius: 5px;
+  width: 8%;
+  border: 1px solid #d3d4d7;
+  background-color: #574b90;
+`;

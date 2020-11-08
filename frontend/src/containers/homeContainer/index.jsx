@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import {
-  CenteredContainer,
   ContainerText,
+  FlexRowContainer,
 } from "../../components/globalContainers";
 
 import urlShortenerSVG from "../../assest/urlShortener.svg";
-import { Form, Img, SubTitle, Title } from "./style";
-import { FormInput } from "../../components/forminput";
-import { StyledButton } from "../../components/button";
+import { Form, Input, Img, SubTitle, Title, Button } from "./style";
 import { useShortLink } from "../../hooks/use-shortLink";
 
 function HomeContainer(props) {
@@ -22,39 +20,26 @@ function HomeContainer(props) {
   };
 
   return (
-    <div>
-      <CenteredContainer margin={"110px"}>
-        <CenteredContainer width={"100%"} flexDirection={"row"}>
-          <ContainerText align={"center"}>
-            <Title>Short Links, Easy to use</Title>
-            <SubTitle>A URL shortener built with MERN stack</SubTitle>
-          </ContainerText>
-          <Img src={urlShortenerSVG} alt="xd" />
-        </CenteredContainer>
-        <Form onSubmit={SubmitHandler}>
-          <FormInput
-            type={"text"}
-            placeholder={"Short your link"}
-            radius={"10px"}
-            value={url}
-            width={"45%"}
-            height={"40px"}
-            onChange={(e) => {
-              setUrl(e.target.value);
-            }}
-          ></FormInput>
-
-          <StyledButton
-            size={"25px"}
-            height={"65px"}
-            radius={"7px"}
-            width={"8%"}
-          >
-            Shorter
-          </StyledButton>
-        </Form>
-      </CenteredContainer>
-    </div>
+    <Fragment>
+      <FlexRowContainer>
+        <ContainerText>
+          <Title>Short Links, Easy to use</Title>
+          <SubTitle>A URL shortener built with MERN stack</SubTitle>
+        </ContainerText>
+        <Img src={urlShortenerSVG} alt="xd" />
+      </FlexRowContainer>
+      <Form onSubmit={SubmitHandler}>
+        <Input
+          type={"text"}
+          placeholder={"Short your link"}
+          value={url}
+          onChange={(e) => {
+            setUrl(e.target.value);
+          }}
+        ></Input>
+        <Button>Shorter</Button>
+      </Form>
+    </Fragment>
   );
 }
 

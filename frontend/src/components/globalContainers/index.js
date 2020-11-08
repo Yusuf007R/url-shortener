@@ -1,15 +1,19 @@
 import styled from "styled-components";
 
-export const CenteredContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: ${(props) => props.flexDirection || "column"};
-  width: ${(props) => props.width || "auto"};
-  height: ${(props) => props.height || "auto"};
-  margin: ${(props) => props.margin || "auto"};
+export const ContainerText = styled.div`
+  text-align: center;
 `;
 
-export const ContainerText = styled.div`
-  text-align: ${(props) => props.align || "auto"};
+export const FlexColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const FlexRowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;

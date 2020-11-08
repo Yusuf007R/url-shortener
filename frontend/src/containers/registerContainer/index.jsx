@@ -1,12 +1,17 @@
 import { React, useState } from "react";
-import { Title, Anchor, Separator } from "./style";
-import { FormInput } from "../../components/forminput";
-import { StyledButton } from "../../components/button";
+import { Separator } from "../../components/separator";
+import {
+  FormInput,
+  StyledButton,
+  Form,
+  Title,
+  Anchor,
+} from "../../components/formElements";
 
 import { registerRequest } from "../../services/authAPI";
 import {
-  CenteredContainer,
   ContainerText,
+  FlexColumnContainer,
 } from "../../components/globalContainers";
 import { StyledLink } from "../../components/link";
 
@@ -22,8 +27,8 @@ function RegisterContainer(props) {
     console.log(result);
   };
   return (
-    <CenteredContainer margin={"110px"}>
-      <ContainerText align={"center"}>
+    <FlexColumnContainer>
+      <ContainerText>
         <Title>Register and start sharing</Title>
         <span>Already have an account? </span>
         <StyledLink to="/login">
@@ -31,45 +36,34 @@ function RegisterContainer(props) {
         </StyledLink>
         <Separator></Separator>
       </ContainerText>
-      <CenteredContainer margin={"0px"}>
-        <form onSubmit={SubmitHandler}>
-          <label>Username:</label>
-          <br></br>
-          <FormInput
-            width={"450px"}
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-            type="text"
-          ></FormInput>
-          <br></br>
-          <label>Email Address:</label>
-          <br></br>
-          <FormInput
-            width={"450px"}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            type="text"
-          ></FormInput>
-          <br></br>
-          <label>Password:</label>
-          <br></br>
-          <FormInput
-            width={"450px"}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            type="password"
-          ></FormInput>
-          <br></br>
-          <Anchor float="right" href="https://developer.mozilla.org">
-            Forgot?
-          </Anchor>
-          <StyledButton width={"100%"}>Register</StyledButton>
-        </form>
-      </CenteredContainer>
-    </CenteredContainer>
+      <Form onSubmit={SubmitHandler}>
+        <label>Username:</label>
+        <FormInput
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+          type="text"
+        ></FormInput>
+        <label>Email Address:</label>
+        <FormInput
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+          type="text"
+        ></FormInput>
+        <label>Password:</label>
+        <FormInput
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          type="password"
+        ></FormInput>
+        <Anchor float="right" href="https://developer.mozilla.org">
+          Forgot?
+        </Anchor>
+        <StyledButton>Register</StyledButton>
+      </Form>
+    </FlexColumnContainer>
   );
 }
 

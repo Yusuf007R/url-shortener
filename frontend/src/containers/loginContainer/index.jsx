@@ -1,15 +1,19 @@
 import { React, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Title, Anchor, Separator } from "./style";
-import { FormInput } from "../../components/forminput";
-import { StyledButton } from "../../components/button";
+
+import {
+  FormInput,
+  StyledButton,
+  Form,
+  Title,
+  Anchor,
+} from "../../components/formElements";
 import { loginRequest } from "../../services/authAPI";
 import {
-  CenteredContainer,
   ContainerText,
+  FlexColumnContainer,
 } from "../../components/globalContainers";
-
-// import axios from "axios";
+import { Separator } from "../../components/separator";
 
 function LoginContainer(props) {
   const [username, setUsername] = useState();
@@ -25,42 +29,35 @@ function LoginContainer(props) {
     }
   };
   return (
-    <CenteredContainer margin={"110px"}>
-      <ContainerText align={"center"}>
+    <FlexColumnContainer>
+      <ContainerText>
         <Title>Log in and start sharing</Title>
         <span>Don't have an account? </span>
         <Link to="/register">
           <Anchor>Sign Up</Anchor>
         </Link>
-        <Separator></Separator>
+        <Separator width={"450px"}></Separator>
       </ContainerText>
-      <CenteredContainer margin={"0px"}>
-        <form onSubmit={SubmitHandler}>
-          <label>Email Address or Username:</label>
-          <br></br>
-          <FormInput
-            width={"450px"}
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-            type="text"
-          ></FormInput>
-          <br></br>
-          <label>Password:</label>
-          <br></br>
-          <FormInput
-            width={"450px"}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            type="password"
-          ></FormInput>
-          <br></br>
-          <Anchor float="right">Forgot?</Anchor>
-          <StyledButton width={"100%"}>Log in</StyledButton>
-        </form>
-      </CenteredContainer>
-    </CenteredContainer>
+      <Form onSubmit={SubmitHandler}>
+        <label>Email Address or Username:</label>
+        <FormInput
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+          type="text"
+        ></FormInput>
+        <label>Password:</label>
+
+        <FormInput
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          type="password"
+        ></FormInput>
+        <Anchor float="right">Forgot?</Anchor>
+        <StyledButton>Log in</StyledButton>
+      </Form>
+    </FlexColumnContainer>
   );
 }
 
