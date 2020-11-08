@@ -9,18 +9,26 @@ const ShortUrl = require('../models/shortUrl');
 const User = require('../models/user');
 
 async function shortUrlGenerator(info) {
-  const newShortUrl = new ShortUrl({
-    fullUrl: info.fullUrl,
-    shortUrl: nanoid(6),
-    user: info.user,
-    userID: info.userID,
-  });
+  const newShortUrl = info.userID
+    ? new ShortUrl({
+        fullUrl: info.fullUrl,
+        shortUrl: nanoid(6),
+        user: info.user,
+        userID: info.userID,
+      })
+    : new ShortUrl({
+        fullUrl: info.fullUrl,
+        shortUrl: nanoid(6),
+      });
+
   await newShortUrl.save((err) => {
-    if (err) shortUrlGenerator();
+    if (err) shortUrlGenerator(info);
   });
-  const user = await User.findOne({ username: info.user });
-  user.short.push(newShortUrl.id);
-  await user.save();
+  if (info.userID) {
+    const user = await User.findOne({ username: info.user });
+    user.short.push(newShortUrl.id);
+    await user.save();
+  }
   return newShortUrl;
 }
 
@@ -30,23 +38,36 @@ app.get('/:tagId', async (req, res) => {
     const { fullUrl } = urlData;
     urlData.click += 1;
     urlData.save();
-    res.redirect(`http://${fullUrl}`);
+    res.redirect(`${fullUrl}`);
     return;
   }
   res.status(200).send('xd');
 });
 
 app.post('/api/shortUrl', async (req, res) => {
-  const jwtValidated = jwtVerify(req.headers.authorization);
-  if (!jwtValidated.valid) {
-    if (jwtValidated.expiredToken) return res.status(403).send('expiredToken');
-    return res.status(403).send('invalidToken');
+  let { fullUrl } = req.body;
+  if (fullUrl.indexOf('://') === -1) {
+    fullUrl = `http://${fullUrl}`;
   }
-  const info = {
-    fullUrl: req.body.fullUrl,
-    user: jwtValidated.decoded.user,
-    userID: jwtValidated.decoded.userID,
+  let info = {
+    fullUrl,
   };
+  if (req.headers.authorization) {
+    const jwtValidated = jwtVerify(req.headers.authorization);
+    if (!jwtValidated.valid) {
+      if (jwtValidated.expiredToken) {
+        return res.status(403).send('expiredToken');
+      }
+      return res.status(403).send('invalidToken');
+    }
+    info = {
+      fullUrl,
+      user: jwtValidated.decoded.user,
+      userID: jwtValidated.decoded.userID,
+    };
+  }
+
   const shorturl = await shortUrlGenerator(info);
+  console.log(shorturl);
   return res.status(200).json(shorturl.shortUrl);
 });

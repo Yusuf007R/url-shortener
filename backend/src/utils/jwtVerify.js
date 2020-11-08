@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const { privateKey } = require('../configs');
 
 function jwtVerify(header) {
+  console.log(header);
   let token = header;
   if (token.startsWith('Bearer ')) {
     token = token.slice(7, token.length);

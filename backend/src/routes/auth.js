@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const app = require('../server');
+const jwtVerify = require('../utils/jwtVerify');
 // const jwtVerify = require('../utils/jwtVerify');
 require('dotenv').config();
 
@@ -22,7 +23,7 @@ function handleError(res) {
 
 function generateAccessToken(data) {
   return jwt.sign(data, privateKey.access, {
-    expiresIn: '30m',
+    expiresIn: '15m',
   });
 }
 
@@ -75,17 +76,27 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
-app.post('/api/auth/accesstoken', async (req, res) => {
+app.get('/api/auth/accesstoken', async (req, res) => {
   let token = req.headers.authorization;
   if (token.startsWith('Bearer ')) {
     token = token.slice(7, token.length);
     try {
       const decoded = jwt.verify(token, privateKey.refresh);
-      const info = { user: decoded.user };
+      console.log(decoded);
+      const info = { user: decoded.user, userID: decoded.userID };
       const accessToken = generateAccessToken(info);
       res.status(200).json({ accessToken });
     } catch (error) {
       return handleError(res);
     }
   }
+});
+
+app.get('/api/auth/verifytoken', async (req, res) => {
+  const jwtValidated = jwtVerify(req.headers.authorization);
+  if (!jwtValidated.valid) {
+    if (jwtValidated.expiredToken) return res.status(403).send('expiredToken');
+    return res.status(403).send('invalidToken');
+  }
+  return res.status(200).send('validToken');
 });

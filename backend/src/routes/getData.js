@@ -15,7 +15,7 @@ app.get('/api/getshortlinks', async (req, res) => {
     return res.status(403).send('invalidToken');
   }
   const { userID } = jwtValidated.decoded;
-  // console.log(jwtValidated.decoded);
+  console.log(jwtValidated.decoded);
   const skip = (page - 1) * limit;
   const user = await User.findOne({ _id: userID }).select('short');
   const totalPages = Math.round(user.short.length / limit);
@@ -27,10 +27,8 @@ app.get('/api/getshortlinks', async (req, res) => {
     })
     .execPopulate();
 
-  return res
-    .status(200)
-    .json({
-      info: { page, totalPages, docsPerPage: limit },
-      result: user.short,
-    });
+  return res.status(200).json({
+    info: { page, totalPages, docsPerPage: limit },
+    result: user.short,
+  });
 });
