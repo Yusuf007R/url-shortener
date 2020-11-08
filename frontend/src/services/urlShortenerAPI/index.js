@@ -1,13 +1,13 @@
 import handleError from "../../utils/handleError";
 import request from "../../utils/request";
 
-const shortUrlRequest = async (data) => {
+const shortUrlRequest = async (fullUrl) => {
   try {
     const result = await request({
       method: "post",
       url: "/shorturl",
       data: {
-        fullUrl: data.fullUrl,
+        fullUrl,
       },
     });
     if (result.status === 200) return result.data;

@@ -1,55 +1,75 @@
 import { React, useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  DivContainer,
-  Title,
-  Anchor,
-  DivContainerHeader,
-  SubmitButton,
-  Separator,
-} from "./style";
-import FormInput from "../../components/formInput";
+import { Title, Anchor, Separator } from "./style";
+import { FormInput } from "../../components/forminput";
+import { StyledButton } from "../../components/button";
 
 import { registerRequest } from "../../services/authAPI";
-
-// import axios from "axios";
+import {
+  CenteredContainer,
+  ContainerText,
+} from "../../components/globalContainers";
+import { StyledLink } from "../../components/link";
 
 function RegisterContainer(props) {
   const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const SubmitHandler = async (event) => {
     event.preventDefault();
-    console.log([username, password]);
-    const result = await registerRequest({ username, password });
+    const result = await registerRequest({ username, password, email });
 
     console.log(result);
   };
   return (
-    <DivContainer>
-      <DivContainerHeader>
+    <CenteredContainer margin={"110px"}>
+      <ContainerText align={"center"}>
         <Title>Register and start sharing</Title>
         <span>Already have an account? </span>
-        <Link to="/login">
+        <StyledLink to="/login">
           <Anchor>Log in</Anchor>
-        </Link>
+        </StyledLink>
         <Separator></Separator>
-      </DivContainerHeader>
-      <form onSubmit={SubmitHandler}>
-        <label>Email Address or Username:</label>
-        <br></br>
-        <FormInput onChange={setUsername} type="text"></FormInput>
-        <br></br>
-        <label>Password:</label>
-        <br></br>
-        <FormInput onChange={setPassword} type="password"></FormInput>
-        <br></br>
-        <Anchor float="right" href="https://developer.mozilla.org">
-          Forgot?
-        </Anchor>
-        <SubmitButton>Register</SubmitButton>
-      </form>
-    </DivContainer>
+      </ContainerText>
+      <CenteredContainer margin={"0px"}>
+        <form onSubmit={SubmitHandler}>
+          <label>Username:</label>
+          <br></br>
+          <FormInput
+            width={"450px"}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+            type="text"
+          ></FormInput>
+          <br></br>
+          <label>Email Address:</label>
+          <br></br>
+          <FormInput
+            width={"450px"}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            type="text"
+          ></FormInput>
+          <br></br>
+          <label>Password:</label>
+          <br></br>
+          <FormInput
+            width={"450px"}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            type="password"
+          ></FormInput>
+          <br></br>
+          <Anchor float="right" href="https://developer.mozilla.org">
+            Forgot?
+          </Anchor>
+          <StyledButton width={"100%"}>Register</StyledButton>
+        </form>
+      </CenteredContainer>
+    </CenteredContainer>
   );
 }
 

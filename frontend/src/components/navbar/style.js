@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const Navbar = styled.div`
-  top: 0;
   position: fixed;
+  top: 0;
   background-color: white;
   width: 100%;
   height: 70px;
@@ -11,6 +11,7 @@ export const Navbar = styled.div`
   align-items: center;
   justify-content: space-around;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 70px;
 `;
 
 export const Img = styled.img`
@@ -18,16 +19,16 @@ export const Img = styled.img`
 `;
 
 export const ImgContainer = styled.div`
-  width: 200px;
+  width: ${(props) => props.width || "250px"};
 `;
 
-export const AnchorCenter = styled.a`
+export const AnchorCenter = styled.span`
   text-decoration: none;
   color: gray;
   font-size: 18px;
 `;
 
-export const AnchorLogin = styled.p`
+export const AnchorLogin = styled.span`
   border: 1px solid #d3d4d7;
   background-color: #574b90;
   font-size: 18px;
@@ -40,4 +41,12 @@ export const DivSpaceAround = styled.div`
   display: flex;
   justify-content: space-around;
   width: ${(props) => props.width || "250px"};
+`;
+
+export const AccountImg = styled.img`
+  width: 40px;
+  color: #574b90;
+  &:hover {
+    cursor: pointer;
+  }
 `;

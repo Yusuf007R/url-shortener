@@ -3,6 +3,7 @@ import handleError from "../../utils/handleError";
 //Auth Requests
 
 const loginRequest = async (data) => {
+  console.log(data);
   try {
     const result = await request({
       method: "post",
@@ -12,7 +13,12 @@ const loginRequest = async (data) => {
         password: data.password,
       },
     });
-    if (result.status === 200) return result.data;
+
+    if (result.status === 200) {
+      localStorage.setItem("token", result.data.accessToken);
+      localStorage.setItem("refreshToken", result.data.refreshToken);
+      return { data: result.data, ok: true };
+    }
   } catch (error) {
     return handleError(error.response);
   }
@@ -24,6 +30,7 @@ const registerRequest = async (data) => {
       method: "post",
       url: "/auth/register",
       data: {
+        email: data.email,
         username: data.username,
         password: data.password,
       },
@@ -34,4 +41,29 @@ const registerRequest = async (data) => {
   }
 };
 
-export { loginRequest, registerRequest };
+const tokenRequest = async () => {
+  try {
+    const result = await request({
+      method: "get",
+      url: "/auth/verifytoken",
+    });
+    if (result.status === 200) return result;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+const accessToken = async (token) => {
+  try {
+    const result = await request({
+      method: "get",
+      url: "/auth/accesstoken",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (result.status === 200) return result;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export { loginRequest, registerRequest, tokenRequest, accessToken };

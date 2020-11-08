@@ -1,20 +1,12 @@
 import React from "react";
 import NavBar from "../../components/navbar";
+import HomeContainer from "../../containers/homeContainer";
 
 const Home = () => {
   return (
     <div>
-      <NavBar />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <h1>TEST HOME</h1>
+      <NavBar right={true} center={true} />
+      <HomeContainer />
     </div>
   );
 };
