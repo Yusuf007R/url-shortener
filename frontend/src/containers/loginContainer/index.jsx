@@ -1,6 +1,5 @@
 import { React, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
 import {
   FormInput,
   StyledButton,
@@ -14,6 +13,7 @@ import {
   FlexColumnContainer,
 } from "../../components/globalContainers";
 import { Separator } from "../../components/separator";
+import { StyledLink } from "../../components/link";
 
 function LoginContainer(props) {
   const [username, setUsername] = useState();
@@ -33,12 +33,12 @@ function LoginContainer(props) {
       <ContainerText>
         <Title>Log in and start sharing</Title>
         <span>Don't have an account? </span>
-        <Link to="/register">
+        <StyledLink to="/register">
           <Anchor>Sign Up</Anchor>
-        </Link>
-        <Separator width={"450px"}></Separator>
+        </StyledLink>
       </ContainerText>
       <Form onSubmit={SubmitHandler}>
+        <Separator></Separator>
         <label>Email Address or Username:</label>
         <FormInput
           onChange={(e) => {

@@ -44,14 +44,15 @@ const Stats = () => {
           getLinks({ page, limit });
         }}
       >
-        xdxd
+        search
       </button>
       {links ? (
-        links.map((xd, i) => {
+        links.map((link, key) => {
+          // console.log(link);
           return (
             <p
-              key={i}
-            >{`fullUrl ${xd.fullUrl} click ${xd.click} user ${xd.user}`}</p>
+              key={key}
+            >{`fullUrl ${link.fullUrl} click ${link.click} user ${link.user} shortUrl ${link.shortUrl}`}</p>
           );
         })
       ) : (

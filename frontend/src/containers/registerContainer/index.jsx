@@ -34,9 +34,9 @@ function RegisterContainer(props) {
         <StyledLink to="/login">
           <Anchor>Log in</Anchor>
         </StyledLink>
-        <Separator></Separator>
       </ContainerText>
       <Form onSubmit={SubmitHandler}>
+        <Separator></Separator>
         <label>Username:</label>
         <FormInput
           onChange={(e) => {

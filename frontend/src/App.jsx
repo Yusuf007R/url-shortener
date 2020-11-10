@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import GlobalStyle from "./components/global-styles";
 import Home from "./pages/home";
@@ -7,7 +8,7 @@ import Stats from "./pages/stats";
 function App() {
   return (
     <Router>
-      <div>
+      <Fragment>
         <GlobalStyle />
         <Switch>
           <Route path="/" exact component={Home} />
@@ -15,7 +16,7 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/stats" component={Stats} />
         </Switch>
-      </div>
+      </Fragment>
     </Router>
   );
 }

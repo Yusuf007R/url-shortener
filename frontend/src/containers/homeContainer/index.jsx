@@ -1,11 +1,22 @@
 import React, { Fragment, useState } from "react";
 import {
   ContainerText,
+  FlexColumnContainer,
   FlexRowContainer,
 } from "../../components/globalContainers";
-
 import urlShortenerSVG from "../../assest/urlShortener.svg";
-import { Form, Input, Img, SubTitle, Title, Button } from "./style";
+
+import {
+  Form,
+  Input,
+  Img,
+  SubTitle,
+  Title,
+  Button,
+  LinkContainer,
+  CopyButton,
+  LinkSpan,
+} from "./style";
 import { useShortLink } from "../../hooks/use-shortLink";
 
 function HomeContainer(props) {
@@ -28,17 +39,40 @@ function HomeContainer(props) {
         </ContainerText>
         <Img src={urlShortenerSVG} alt="xd" />
       </FlexRowContainer>
-      <Form onSubmit={SubmitHandler}>
-        <Input
-          type={"text"}
-          placeholder={"Short your link"}
-          value={url}
-          onChange={(e) => {
-            setUrl(e.target.value);
-          }}
-        ></Input>
-        <Button>Shorter</Button>
-      </Form>
+      <FlexColumnContainer>
+        <Form onSubmit={SubmitHandler}>
+          <Input
+            type="text"
+            placeholder="Short your link"
+            value={url}
+            onChange={(e) => {
+              setUrl(e.target.value);
+            }}
+          ></Input>
+          <Button>Shorter</Button>
+        </Form>
+        <LinkContainer>
+          <LinkSpan>www.google.com</LinkSpan>
+          <div>
+            <LinkSpan>https://yusuf.ly/1212</LinkSpan>
+            <CopyButton>copy</CopyButton>
+          </div>
+        </LinkContainer>
+        <LinkContainer>
+          <LinkSpan>www.google.com</LinkSpan>
+          <div>
+            <LinkSpan>https://yusuf.ly/1212</LinkSpan>
+            <CopyButton>copy</CopyButton>
+          </div>
+        </LinkContainer>
+        <LinkContainer>
+          <LinkSpan>www.google.com</LinkSpan>
+          <div>
+            <LinkSpan>https://yusuf.ly/1212</LinkSpan>
+            <CopyButton>copy</CopyButton>
+          </div>
+        </LinkContainer>
+      </FlexColumnContainer>
     </Fragment>
   );
 }

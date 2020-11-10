@@ -45,7 +45,6 @@ export const DivSpaceAround = styled.div`
 
 export const AccountImg = styled.img`
   width: 40px;
-  color: #574b90;
   &:hover {
     cursor: pointer;
   }

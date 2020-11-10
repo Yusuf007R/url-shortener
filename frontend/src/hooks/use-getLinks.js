@@ -5,17 +5,18 @@ import { useLogin } from "./use-login";
 export const useGetLinks = () => {
   const [links, setLinks] = useState();
   const { getNewToken } = useLogin(true);
+
   const getLinks = async (params) => {
     console.log("request");
-    const result = await getShortLinks({
-      page: params.page,
-      limit: params.limit,
-    });
-    if (result.code === 403) {
-      await getNewToken();
-      return getLinks(params);
+    try {
+      const result = await getShortLinks({
+        page: params.page,
+        limit: params.limit,
+      });
+      setLinks(result.result);
+    } catch (error) {
+      return error;
     }
-    setLinks(result.result);
   };
 
   return { links, getLinks };
