@@ -56,7 +56,6 @@ app.post('/api/auth/login', async (req, res) => {
     const user = await User.findOne({ username: req.body.username }).select(
       '-short',
     );
-    console.log(user);
     if (user == null) return res.status(409).send('cannot find user');
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) {
@@ -78,25 +77,28 @@ app.post('/api/auth/login', async (req, res) => {
 
 app.get('/api/auth/accesstoken', async (req, res) => {
   let token = req.headers.authorization;
-  if (token.startsWith('Bearer ')) {
+  if (!token.startsWith('Bearer ')) {
+    return handleError(res);
+  }
+  try {
     token = token.slice(7, token.length);
-    try {
-      const decoded = jwt.verify(token, privateKey.refresh);
-      console.log(decoded);
-      const info = { user: decoded.user, userID: decoded.userID };
-      const accessToken = generateAccessToken(info);
-      res.status(200).json({ accessToken });
-    } catch (error) {
-      return handleError(res);
-    }
+    const decoded = jwt.verify(token, privateKey.refresh);
+    const dbToken = await RefreshToken.findOne({ refreshToken: token });
+    if (dbToken == null) throw new Error();
+    const info = { user: decoded.user, userID: decoded.userID };
+    const accessToken = generateAccessToken(info);
+    res.status(200).json({ accessToken });
+  } catch (error) {
+    return handleError(res);
   }
 });
 
-app.get('/api/auth/verifytoken', async (req, res) => {
-  const jwtValidated = jwtVerify(req.headers.authorization);
-  if (!jwtValidated.valid) {
-    if (jwtValidated.expiredToken) return res.status(403).send('expiredToken');
-    return res.status(403).send('invalidToken');
+app.post('/api/auth/logout', async (req, res) => {
+  const { refreshToken } = req.body;
+  try {
+    await RefreshToken.deleteOne({ refreshToken });
+    return res.status(200).json('success');
+  } catch (error) {
+    return handleError(res);
   }
-  return res.status(200).send('validToken');
 });
