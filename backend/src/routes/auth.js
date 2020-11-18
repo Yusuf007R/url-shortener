@@ -1,8 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const app = require('../server');
-const jwtVerify = require('../utils/jwtVerify');
-// const jwtVerify = require('../utils/jwtVerify');
 require('dotenv').config();
 
 // configs
@@ -40,6 +38,13 @@ function login(user) {
 }
 
 app.post('/api/auth/register', async (req, res) => {
+  const checkEmail = await User.findOne({ email: req.body.email });
+  const checkUsername = await User.findOne({ username: req.body.username });
+  if (checkEmail || checkUsername)
+    return res
+      .status(409)
+      .json({ emailTaken: !!checkEmail, usernameTaken: !!checkUsername });
+
   try {
     const { password } = req.body;
     const hash = await bcrypt.hash(password, 10);
@@ -53,12 +58,6 @@ app.post('/api/auth/register', async (req, res) => {
     return res.status(201).json(result);
   } catch (error) {
     if (error) {
-      if (error.code === 11000) {
-        if (error.keyPattern.username) {
-          return res.status(409).send('username already taken');
-        }
-        return res.status(409).send('email already taken');
-      }
       return handleError(res);
     }
   }
