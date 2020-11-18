@@ -2,7 +2,6 @@ import handleError from "../../utils/handleError";
 import request from "../../utils/request";
 
 const getShortLinks = async (params) => {
-  // console.log(params);
   try {
     const result = await request({
       method: "get",

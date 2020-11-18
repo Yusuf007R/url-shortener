@@ -1,9 +1,10 @@
 //apiurl
 
-const apiUrl = "http://localhost:3001/api/";
+const baseUrl = "http://localhost:3001";
+const apiUrl = `${baseUrl}/api`;
 
 //generic error
 
 const genericError = "Ups! try again";
 
-export { apiUrl, genericError };
+export { apiUrl, genericError, baseUrl };

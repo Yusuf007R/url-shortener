@@ -11,11 +11,12 @@ app.get('/api/getshortlinks', async (req, res) => {
   const { limit } = req.query;
   const jwtValidated = jwtVerify(req.headers.authorization);
   if (!jwtValidated.valid) {
-    if (jwtValidated.expiredToken) return res.status(403).send('expiredToken');
+    if (jwtValidated.expiredToken) {
+      return res.status(401).send('expiredToken');
+    }
     return res.status(403).send('invalidToken');
   }
   const { userID } = jwtValidated.decoded;
-  console.log(jwtValidated.decoded);
   const skip = (page - 1) * limit;
   const user = await User.findOne({ _id: userID }).select('short');
   const totalPages = Math.round(user.short.length / limit);

@@ -27,6 +27,18 @@ function generateAccessToken(data) {
   });
 }
 
+function login(user) {
+  const info = { user: user.username, userID: user.id };
+  const accessToken = generateAccessToken(info);
+  const refreshToken = jwt.sign(info, privateKey.refresh);
+  const newRefreshToken = new RefreshToken({
+    username: user.username,
+    refreshToken,
+  });
+  newRefreshToken.save();
+  return { accessToken, refreshToken };
+}
+
 app.post('/api/auth/register', async (req, res) => {
   try {
     const { password } = req.body;
@@ -37,7 +49,8 @@ app.post('/api/auth/register', async (req, res) => {
       password: hash,
     });
     await newUser.save();
-    return res.status(201).send('success');
+    const result = login(newUser);
+    return res.status(201).json(result);
   } catch (error) {
     if (error) {
       if (error.code === 11000) {
@@ -59,15 +72,8 @@ app.post('/api/auth/login', async (req, res) => {
     if (user == null) return res.status(409).send('cannot find user');
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) {
-      const info = { user: user.username, userID: user.id };
-      const accessToken = generateAccessToken(info);
-      const refreshToken = jwt.sign(info, privateKey.refresh);
-      const newRefreshToken = new RefreshToken({
-        username: user.username,
-        refreshToken,
-      });
-      newRefreshToken.save();
-      return res.status(200).json({ accessToken, refreshToken });
+      const result = login(user);
+      return res.status(200).json(result);
     }
     return res.status(403).send('wrong password');
   } catch (error) {

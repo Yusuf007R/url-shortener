@@ -16,6 +16,7 @@ import { useLogin } from "../../hooks/use-login";
 
 function NavBar(props) {
   const { logout, logged } = useLogin();
+
   const RigthSide = () => {
     if (logged) {
       return (

@@ -64,7 +64,8 @@ export const LinkContainer = styled.div`
   padding: 15px;
 `;
 
-export const LinkSpan = styled.span`
+export const LinkAnchor = styled.a`
+  text-decoration: none;
   color: #786fa6;
 `;
 

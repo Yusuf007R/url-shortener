@@ -1,4 +1,6 @@
 import { React, useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import { Separator } from "../../components/separator";
 import {
   FormInput,
@@ -19,12 +21,19 @@ function RegisterContainer(props) {
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const history = useHistory();
 
   const SubmitHandler = async (event) => {
     event.preventDefault();
-    const result = await registerRequest({ username, password, email });
-
-    console.log(result);
+    try {
+      const result = await registerRequest({ username, password, email });
+      console.log(result);
+      if (result.ok) {
+        history.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <FlexColumnContainer>

@@ -3,7 +3,6 @@ import handleError from "../../utils/handleError";
 //Auth Requests
 
 const loginRequest = async (data) => {
-  console.log(data);
   try {
     const result = await request({
       method: "post",
@@ -13,13 +12,13 @@ const loginRequest = async (data) => {
         password: data.password,
       },
     });
-
     if (result.status === 200) {
       localStorage.setItem("token", result.data.accessToken);
       localStorage.setItem("refreshToken", result.data.refreshToken);
       return { data: result.data, ok: true };
     }
   } catch (error) {
+    console.log(error);
     return handleError(error.response);
   }
 };
@@ -35,7 +34,11 @@ const registerRequest = async (data) => {
         password: data.password,
       },
     });
-    if (result.status === 201) return result.data;
+    if (result.status === 201) {
+      localStorage.setItem("token", result.data.accessToken);
+      localStorage.setItem("refreshToken", result.data.refreshToken);
+      return { data: result.data, ok: true };
+    }
   } catch (error) {
     return handleError(error.response);
   }

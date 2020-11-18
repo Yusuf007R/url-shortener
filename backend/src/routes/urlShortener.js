@@ -46,6 +46,7 @@ app.get('/:tagId', async (req, res) => {
 
 app.post('/api/shortUrl', async (req, res) => {
   let { fullUrl } = req.body;
+  console.log(fullUrl);
   if (fullUrl.indexOf('://') === -1) {
     fullUrl = `http://${fullUrl}`;
   }
@@ -56,7 +57,7 @@ app.post('/api/shortUrl', async (req, res) => {
     const jwtValidated = jwtVerify(req.headers.authorization);
     if (!jwtValidated.valid) {
       if (jwtValidated.expiredToken) {
-        return res.status(403).send('expiredToken');
+        return res.status(401).send('expiredToken');
       }
       return res.status(403).send('invalidToken');
     }
@@ -68,6 +69,5 @@ app.post('/api/shortUrl', async (req, res) => {
   }
 
   const shorturl = await shortUrlGenerator(info);
-  console.log(shorturl);
   return res.status(200).json(shorturl.shortUrl);
 });

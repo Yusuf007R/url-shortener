@@ -1,16 +1,16 @@
+import { useState } from "react";
 import { shortUrlRequest } from "../services/urlShortenerAPI";
-import { useLogin } from "./use-login";
+import { baseUrl } from "../config/";
 
 export const useShortLink = () => {
-  const { getNewToken } = useLogin();
+  const [url, setUrl] = useState("");
+  let fulldata;
   const shortLink = async (fullUrl) => {
     const result = await shortUrlRequest(fullUrl);
-    if (result.code === 403) {
-      await getNewToken();
-      return shortLink(fullUrl);
-    }
-    return result;
+    let fulldata = { id: result, fullUrl };
+    setUrl(`${baseUrl}/${result}`);
+    return fulldata;
   };
 
-  return { shortLink };
+  return { shortLink, url, setUrl, fulldata };
 };

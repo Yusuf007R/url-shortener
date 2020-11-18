@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   ContainerText,
   FlexColumnContainer,
@@ -15,19 +15,54 @@ import {
   Button,
   LinkContainer,
   CopyButton,
-  LinkSpan,
+  LinkAnchor,
 } from "./style";
 import { useShortLink } from "../../hooks/use-shortLink";
+import { baseUrl } from "../../config";
 
 function HomeContainer(props) {
-  const { shortLink } = useShortLink();
+  const { shortLink, setUrl, url } = useShortLink();
+  const [links, setLinks] = useState({ links: [] });
 
-  const [url, setUrl] = useState("");
+  useEffect(() => {
+    test();
+  }, []);
+
+  const test = () => {
+    let localLinks = localStorage.getItem("links");
+    if (localLinks) {
+      let local = JSON.parse(localLinks);
+      setLinks(local);
+    }
+  };
+
   const SubmitHandler = async (event) => {
     event.preventDefault();
-    const result = await shortLink(url);
-    console.log(result);
-    setUrl(`http://localhost:3001/${result}`);
+    try {
+      const data = await shortLink(url);
+      let localLinks = localStorage.getItem("links");
+      if (!localLinks) {
+        let local = { links: [] };
+        local.links.unshift(data);
+        local = JSON.stringify(local);
+        localStorage.setItem("links", local);
+        return test();
+      }
+      let local = JSON.parse(localLinks);
+      if (local.links.length === 3) {
+        local.links.pop();
+        local.links.unshift(data);
+        local = JSON.stringify(local);
+        localStorage.setItem("links", local);
+        return test();
+      }
+      local.links.push(data);
+      local = JSON.stringify(local);
+      localStorage.setItem("links", local);
+      return test();
+    } catch (error) {
+      return;
+    }
   };
 
   return (
@@ -51,27 +86,23 @@ function HomeContainer(props) {
           ></Input>
           <Button>Shorter</Button>
         </Form>
-        <LinkContainer>
-          <LinkSpan>www.google.com</LinkSpan>
-          <div>
-            <LinkSpan>https://yusuf.ly/1212</LinkSpan>
-            <CopyButton>copy</CopyButton>
-          </div>
-        </LinkContainer>
-        <LinkContainer>
-          <LinkSpan>www.google.com</LinkSpan>
-          <div>
-            <LinkSpan>https://yusuf.ly/1212</LinkSpan>
-            <CopyButton>copy</CopyButton>
-          </div>
-        </LinkContainer>
-        <LinkContainer>
-          <LinkSpan>www.google.com</LinkSpan>
-          <div>
-            <LinkSpan>https://yusuf.ly/1212</LinkSpan>
-            <CopyButton>copy</CopyButton>
-          </div>
-        </LinkContainer>
+        {links ? (
+          links.links.map((link, key) => {
+            return (
+              <LinkContainer key={key}>
+                <LinkAnchor href={link.fullUrl}>{link.fullUrl}</LinkAnchor>
+                <div>
+                  <LinkAnchor
+                    href={`${baseUrl}/${link.id}`}
+                  >{`${baseUrl}/${link.id}`}</LinkAnchor>
+                  <CopyButton>copy</CopyButton>
+                </div>
+              </LinkContainer>
+            );
+          })
+        ) : (
+          <p>not logged</p>
+        )}
       </FlexColumnContainer>
     </Fragment>
   );

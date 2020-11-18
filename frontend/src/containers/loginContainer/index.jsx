@@ -22,10 +22,13 @@ function LoginContainer(props) {
 
   const SubmitHandler = async (event) => {
     event.preventDefault();
-    const result = await loginRequest({ username, password });
-    console.log(result);
-    if (result.ok) {
-      history.push("/");
+    try {
+      const result = await loginRequest({ username, password });
+      if (result.ok) {
+        history.push("/");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
