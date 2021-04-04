@@ -27,7 +27,7 @@ function RegisterContainer(props) {
   const [passwordStrenght, setPasswordStrenght] = useState({});
   const [validEmail, setValidEmail] = useState(false);
   const [taken, setTaken] = useState({});
-  const [labelError, setLabelError] = useState({});
+  const [emailLabelError, setEmailLabelError] = useState("");
   const history = useHistory();
 
   const emailVerify = (emailToVerify) => {
@@ -84,11 +84,7 @@ function RegisterContainer(props) {
       <Form onSubmit={SubmitHandler}>
         <Separator></Separator>
         <label>Username: </label>
-        {taken.usernameTaken ? (
-          <ErrorLabel>Username Already Taken</ErrorLabel>
-        ) : (
-          " "
-        )}
+        {taken.usernameTaken && <ErrorLabel>Username Already Taken</ErrorLabel>}
         <InputWrapper>
           <FormInput
             onChange={(e) => {
@@ -98,7 +94,7 @@ function RegisterContainer(props) {
           ></FormInput>
         </InputWrapper>
         <label>Email Address: </label>
-        {taken.emailTaken ? <ErrorLabel>Email Already Taken</ErrorLabel> : " "}
+        {taken.emailTaken && <ErrorLabel>Email Already Taken</ErrorLabel>}
         <InputWrapper>
           <FormInput
             onChange={(e) => {

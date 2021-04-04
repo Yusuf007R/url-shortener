@@ -16,25 +16,6 @@ import { useLogin } from "../../hooks/use-login";
 
 function NavBar(props) {
   const { logout, logged } = useLogin();
-
-  const RigthSide = () => {
-    if (logged) {
-      return (
-        <AccountImg onClick={logout} src={accountSvg} alt="xd"></AccountImg>
-      );
-    }
-    return (
-      <Fragment>
-        <StyledLink to="/login">
-          <AnchorLogin>Log in</AnchorLogin>
-        </StyledLink>
-        <StyledLink to="/register">
-          <AnchorLogin>Sign up</AnchorLogin>
-        </StyledLink>
-      </Fragment>
-    );
-  };
-
   return (
     <Navbar>
       <ImgContainer width={"200px"}>
@@ -43,9 +24,9 @@ function NavBar(props) {
         </StyledLink>
       </ImgContainer>
       <DivSpaceAround>
-        {props.center ? (
+        {props.center && (
           <Fragment>
-            <StyledLink to="/login">
+            <StyledLink to="/">
               <AnchorCenter>Home</AnchorCenter>
             </StyledLink>
             <StyledLink to="/stats">
@@ -55,13 +36,22 @@ function NavBar(props) {
               Github
             </AnchorCenter>
           </Fragment>
-        ) : (
-          ""
         )}
       </DivSpaceAround>
 
       <DivSpaceAround width={"200px"}>
-        {props.right ? <RigthSide></RigthSide> : ""}
+        {props.right && logged ? (
+          <AccountImg onClick={logout} src={accountSvg} alt="xd"></AccountImg>
+        ) : (
+          <Fragment>
+            <StyledLink to="/login">
+              <AnchorLogin>Log in</AnchorLogin>
+            </StyledLink>
+            <StyledLink to="/register">
+              <AnchorLogin>Sign up</AnchorLogin>
+            </StyledLink>
+          </Fragment>
+        )}
       </DivSpaceAround>
     </Navbar>
   );

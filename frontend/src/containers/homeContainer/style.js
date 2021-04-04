@@ -78,3 +78,11 @@ export const CopyButton = styled.button`
   padding: 10px 15px 10px;
   cursor: pointer;
 `;
+
+export const Anchor = styled.span`
+  color: #786fa6;
+  &:hover {
+    color: #786fa6;
+    cursor: pointer;
+  }
+`;

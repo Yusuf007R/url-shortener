@@ -2,7 +2,7 @@ import { useState } from "react";
 import { getShortLinks } from "../services/getDataAPI";
 
 export const useGetLinks = () => {
-  const [links, setLinks] = useState();
+  const [links, setLinks] = useState([]);
   const getLinks = async (params) => {
     try {
       const result = await getShortLinks({

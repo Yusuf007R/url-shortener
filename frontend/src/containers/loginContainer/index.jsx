@@ -6,6 +6,7 @@ import {
   Form,
   Title,
   Anchor,
+  InputWrapper,
 } from "../../components/formElements";
 import { loginRequest } from "../../services/authAPI";
 import {
@@ -43,21 +44,24 @@ function LoginContainer(props) {
       <Form onSubmit={SubmitHandler}>
         <Separator></Separator>
         <label>Email Address or Username:</label>
-        <FormInput
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-          type="text"
-        ></FormInput>
+        <InputWrapper>
+          <FormInput
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+            type="text"
+          ></FormInput>
+        </InputWrapper>
         <label>Password:</label>
-
-        <FormInput
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          type="password"
-        ></FormInput>
-        <Anchor float="right">Forgot?</Anchor>
+        <InputWrapper>
+          <FormInput
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            type="password"
+          ></FormInput>
+          <Anchor float="right">Forgot?</Anchor>
+        </InputWrapper>
         <StyledButton>Log in</StyledButton>
       </Form>
     </FlexColumnContainer>

@@ -16,6 +16,7 @@ import {
   LinkContainer,
   CopyButton,
   LinkAnchor,
+  Anchor,
 } from "./style";
 import { useShortLink } from "../../hooks/use-shortLink";
 import { baseUrl } from "../../config";
@@ -92,10 +93,18 @@ function HomeContainer(props) {
               <LinkContainer key={key}>
                 <LinkAnchor href={link.fullUrl}>{link.fullUrl}</LinkAnchor>
                 <div>
-                  <LinkAnchor
-                    href={`${baseUrl}/${link.id}`}
-                  >{`${baseUrl}/${link.id}`}</LinkAnchor>
-                  <CopyButton>copy</CopyButton>
+                  <Anchor
+                    onClick={() => {
+                      navigator.clipboard.writeText(`${baseUrl}/${link.id}`);
+                    }}
+                  >{`${baseUrl}/${link.id}`}</Anchor>
+                  <CopyButton
+                    onClick={() => {
+                      navigator.clipboard.writeText(`${baseUrl}/${link.id}`);
+                    }}
+                  >
+                    copy
+                  </CopyButton>
                 </div>
               </LinkContainer>
             );
