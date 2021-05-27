@@ -19,7 +19,8 @@ app.get('/api/getshortlinks', async (req, res) => {
   const { userID } = jwtValidated.decoded;
   const skip = (page - 1) * limit;
   const user = await User.findOne({ _id: userID }).select('short');
-  const totalPages = Math.round(user.short.length / limit);
+  const totalLinks = user.short.length;
+  const totalPages = Math.ceil(user.short.length / limit);
   await user
     .populate({
       path: 'short',
@@ -29,7 +30,12 @@ app.get('/api/getshortlinks', async (req, res) => {
     .execPopulate();
 
   return res.status(200).json({
-    info: { page, totalPages, docsPerPage: limit },
+    info: {
+      page,
+      totalPages,
+      linksPerPage: limit,
+      totalLinks,
+    },
     result: user.short,
   });
 });

@@ -11,11 +11,12 @@ app.use(cors());
 app.set('trust proxy', true);
 
 // express slowdown
-// const speedLimiter = slowDown({
-//   windowMs: 15 * 60 * 1000,
-//   delayAfter: 100,
-//   delayMs: 500,
-// });
-// app.use(speedLimiter);
+
+const speedLimiter = slowDown({
+  windowMs: 15 * 60 * 1000,
+  delayAfter: 100,
+  delayMs: 500,
+});
+app.use('/api/', speedLimiter);
 
 module.exports = app;

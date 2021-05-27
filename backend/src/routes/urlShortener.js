@@ -46,7 +46,6 @@ app.get('/:tagId', async (req, res) => {
 
 app.post('/api/shortUrl', async (req, res) => {
   let { fullUrl } = req.body;
-  console.log(fullUrl);
   if (fullUrl.indexOf('://') === -1) {
     fullUrl = `http://${fullUrl}`;
   }

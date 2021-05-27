@@ -11,6 +11,7 @@ const shortUrl = new Schema({
     unique: true,
   },
   click: { type: Number, default: 0 },
+  date: { type: Date, default: Date.now },
 });
 
 module.exports = model('shortUrl', shortUrl);
