@@ -12,20 +12,33 @@ export const Navbar = styled.div`
   justify-content: space-around;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 70px;
+
+  @media (max-width: 550px) {
+    height: 110px;
+    width: 100%;
+  }
 `;
 
 export const Img = styled.img`
   width: 100px;
+  @media (max-width: 550px) {
+    width: 90px;
+  }
 `;
 
 export const ImgContainer = styled.div`
-  width: ${(props) => props.width || "250px"};
+  display: grid;
+  place-items: center;
+  width: 200px;
 `;
 
 export const AnchorCenter = styled.a`
   text-decoration: none;
   color: gray;
   font-size: 18px;
+  @media (max-width: 550px) {
+    font-size: 17px;
+  }
 `;
 
 export const AnchorLogin = styled.span`
@@ -35,12 +48,15 @@ export const AnchorLogin = styled.span`
   padding: 12px;
   border-radius: 5px;
   color: white;
+  @media (max-width: 550px) {
+    padding: 10px;
+  }
 `;
 
 export const DivSpaceAround = styled.div`
   display: flex;
   justify-content: space-around;
-  width: ${(props) => props.width || "250px"};
+  width: 200px;
 `;
 
 export const AccountImg = styled.img`
