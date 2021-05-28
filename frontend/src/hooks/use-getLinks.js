@@ -2,18 +2,19 @@ import { useState } from "react";
 import { getShortLinks } from "../services/getDataAPI";
 
 export const useGetLinks = () => {
-  const [links, setLinks] = useState([]);
+  const [linksInfo, setLinksInfo] = useState({ result: [], info: {} });
   const getLinks = async (params) => {
     try {
       const result = await getShortLinks({
         page: params.page,
         limit: params.limit,
       });
-      setLinks(result.result);
+      console.log(result);
+      setLinksInfo(result);
     } catch (err) {
       return;
     }
   };
 
-  return { links, getLinks };
+  return { linksInfo, getLinks };
 };

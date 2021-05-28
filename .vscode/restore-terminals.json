@@ -1,0 +1,19 @@
+{
+  "artificialDelayMilliseconds": 300,
+  "keepExistingTerminalsOpen": false,
+  "runOnStartup": true,
+  "terminals": [
+    {
+      "splitTerminals": [
+        {
+          "name": "server",
+          "commands": ["cd ./backend && npm start"]
+        },
+        {
+          "name": "frontend",
+          "commands": ["cd ./frontend && npm start"]
+        }
+      ]
+    }
+  ]
+}

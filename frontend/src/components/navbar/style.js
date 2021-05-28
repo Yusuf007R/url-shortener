@@ -22,7 +22,7 @@ export const ImgContainer = styled.div`
   width: ${(props) => props.width || "250px"};
 `;
 
-export const AnchorCenter = styled.span`
+export const AnchorCenter = styled.a`
   text-decoration: none;
   color: gray;
   font-size: 18px;
