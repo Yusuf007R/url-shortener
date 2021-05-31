@@ -1,13 +1,13 @@
-import React from "react";
+import React, { Fragment } from "react";
 import NavBar from "../../components/navbar";
 import HomeContainer from "../../containers/homeContainer";
 
 const Home = () => {
   return (
-    <div>
-      <NavBar right={true} center={true} />
+    <Fragment>
+      <NavBar center={true} />
       <HomeContainer />
-    </div>
+    </Fragment>
   );
 };
 

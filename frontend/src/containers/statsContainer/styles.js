@@ -10,23 +10,70 @@ export const Styles = styled.div`
       padding: 15px;
     }
   }
+
+  @media (max-width: 700px) {
+    table {
+      thead {
+        display: none;
+      }
+      tbody,
+      tr,
+      td {
+        display: block;
+        width: 100%;
+      }
+      tr {
+        margin-bottom: 15px;
+      }
+      td {
+        text-align: right;
+        padding-left: 70%;
+        margin-left: -25px;
+        text-align: right;
+        position: relative;
+        @media (max-width: 550px) {
+          padding-left: 50%;
+          margin-left: -15px;
+        }
+        @media (max-width: 450px) {
+          padding-left: 25%;
+          margin-left: 0px;
+        }
+      }
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 5px;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: left;
+      }
+    }
+  }
 `;
 
 export const Contianer = styled.div`
+  /* @media (min-width: 900px) { */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* overflow-x: auto; */
+  /* } */
+  width: 100%;
 `;
 
+export const StyledTd = styled.td``;
+
 export const LinkAnchor = styled.a`
-  display: block;
+  display: inline-block;
   text-decoration: none;
   color: #786fa6;
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
-  width: ${(probs) => probs.width || "100px"};
+  width: 250px;
   &:hover {
     cursor: pointer;
   }

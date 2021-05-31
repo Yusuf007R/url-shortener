@@ -6,8 +6,13 @@ import {
   HeaderContainer,
   LinkAnchor,
   OptionsContainer,
+  StyledTd,
   Styles,
 } from "./styles";
+import {
+  FlexRowContainer,
+  FlexColumnContainer,
+} from "../../components/globalContainers";
 
 const columns = [
   {
@@ -36,30 +41,33 @@ const TableCell = ({ cell }) => {
   switch (cell.column.id) {
     case "fullUrl":
       return (
-        <td {...cell.getCellProps()}>
-          <LinkAnchor width={"20vw"} href={cell.value}>
+        <StyledTd data-label={"Full URL"} {...cell.getCellProps()}>
+          <LinkAnchor href={cell.value}>
             {cell.value.replace(/(^\w+:|^)\/\//, "")}
           </LinkAnchor>
-        </td>
+        </StyledTd>
       );
     case "shortUrl":
       return (
-        <td {...cell.getCellProps()}>
-          <LinkAnchor
-            width={"15vw"}
-            href={`http://localhost:3001/${cell.value}`}
-          >
+        <StyledTd data-label={"Short URL"} {...cell.getCellProps()}>
+          <LinkAnchor href={`http://localhost:3001/${cell.value}`}>
             {`http://localhost:3001/${cell.value}`}
           </LinkAnchor>
-        </td>
+        </StyledTd>
       );
     case "date":
       return (
-        <td {...cell.getCellProps()}>{new Date(cell.value).toDateString()}</td>
+        <StyledTd data-label={"Date"} {...cell.getCellProps()}>
+          {new Date(cell.value).toDateString()}
+        </StyledTd>
       );
 
     default:
-      return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+      return (
+        <StyledTd data-label={"Click"} {...cell.getCellProps()}>
+          {cell.render("Cell")}
+        </StyledTd>
+      );
   }
 };
 
@@ -196,15 +204,17 @@ function StatsContainer() {
     // eslint-disable-next-line
   }, [pagination]);
   return (
-    <Contianer>
-      <Styles>
-        <Table
-          paginationSystem={{ setPagination, pagination }}
-          columns={columns}
-          links={linksInfo}
-        ></Table>
-      </Styles>
-    </Contianer>
+    <FlexRowContainer>
+      <Contianer>
+        <Styles>
+          <Table
+            paginationSystem={{ setPagination, pagination }}
+            columns={columns}
+            links={linksInfo}
+          ></Table>
+        </Styles>
+      </Contianer>
+    </FlexRowContainer>
   );
 }
 

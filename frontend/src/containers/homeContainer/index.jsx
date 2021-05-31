@@ -1,11 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import {
-  ContainerText,
-  FlexColumnContainer,
-  FlexRowContainer,
-} from "../../components/globalContainers";
 import urlShortenerSVG from "../../assest/urlShortener.svg";
-
 import {
   Form,
   Input,
@@ -15,8 +9,10 @@ import {
   Button,
   LinkContainer,
   CopyButton,
-  LinkAnchor,
   Anchor,
+  TableContainer,
+  InfoContainer,
+  ContainerText,
 } from "./style";
 import { useShortLink } from "../../hooks/use-shortLink";
 import { baseUrl } from "../../config";
@@ -68,14 +64,14 @@ function HomeContainer(props) {
 
   return (
     <Fragment>
-      <FlexRowContainer>
+      <InfoContainer>
         <ContainerText>
           <Title>Short Links, Easy to use</Title>
           <SubTitle>A URL shortener built with MERN stack</SubTitle>
         </ContainerText>
         <Img src={urlShortenerSVG} alt="xd" />
-      </FlexRowContainer>
-      <FlexColumnContainer>
+      </InfoContainer>
+      <TableContainer>
         <Form onSubmit={SubmitHandler}>
           <Input
             type="text"
@@ -91,7 +87,7 @@ function HomeContainer(props) {
           links.links.map((link, key) => {
             return (
               <LinkContainer key={key}>
-                <LinkAnchor href={link.fullUrl}>{link.fullUrl}</LinkAnchor>
+                <Anchor href={link.fullUrl}>{link.fullUrl}</Anchor>
                 <div>
                   <Anchor
                     onClick={() => {
@@ -112,7 +108,7 @@ function HomeContainer(props) {
         ) : (
           <p>not logged</p>
         )}
-      </FlexColumnContainer>
+      </TableContainer>
     </Fragment>
   );
 }

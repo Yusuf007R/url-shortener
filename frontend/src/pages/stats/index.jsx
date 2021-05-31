@@ -5,7 +5,7 @@ import StatsContainer from "../../containers/statsContainer";
 const Stats = () => {
   return (
     <Fragment>
-      <NavBar right={true} center={true} />
+      <NavBar center={true} />
       <StatsContainer></StatsContainer>
     </Fragment>
   );

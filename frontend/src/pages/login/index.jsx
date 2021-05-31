@@ -5,7 +5,7 @@ import LoginContainer from "../../containers/loginContainer";
 const Login = () => {
   return (
     <div>
-      <NavBar />
+      <NavBar center={true} />
       <LoginContainer />
     </div>
   );

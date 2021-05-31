@@ -27,7 +27,7 @@ function RegisterContainer(props) {
   const [passwordStrenght, setPasswordStrenght] = useState({});
   const [validEmail, setValidEmail] = useState(false);
   const [taken, setTaken] = useState({});
-  const [emailLabelError, setEmailLabelError] = useState("");
+  // const [emailLabelError, setEmailLabelError] = useState("");
   const history = useHistory();
 
   const emailVerify = (emailToVerify) => {

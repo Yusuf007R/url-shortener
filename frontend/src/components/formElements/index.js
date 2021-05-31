@@ -26,6 +26,9 @@ export const StyledButton = styled.button`
 
 export const Form = styled.form`
   width: 450px;
+  @media (max-width: 500px) {
+    width: 92vw;
+  }
 `;
 
 export const Anchor = styled.span`
