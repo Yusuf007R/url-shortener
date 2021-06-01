@@ -9,33 +9,37 @@ const User = require('../models/user');
 app.get('/api/getshortlinks', async (req, res) => {
   const { page } = req.query;
   const { limit } = req.query;
-  const jwtValidated = jwtVerify(req.headers.authorization);
-  if (!jwtValidated.valid) {
-    if (jwtValidated.expiredToken) {
-      return res.status(401).send('expiredToken');
+  try {
+    const jwtValidated = jwtVerify(req.headers.authorization);
+    if (!jwtValidated.valid) {
+      if (jwtValidated.expiredToken) {
+        return res.status(401).send('expiredToken');
+      }
+      return res.status(403).send('invalidToken');
     }
-    return res.status(403).send('invalidToken');
-  }
-  const { userID } = jwtValidated.decoded;
-  const skip = (page - 1) * limit;
-  const user = await User.findOne({ _id: userID }).select('short');
-  const totalLinks = user.short.length;
-  const totalPages = Math.ceil(user.short.length / limit);
-  await user
-    .populate({
-      path: 'short',
-      options: { limit, skip },
-      select: '-_id -__v',
-    })
-    .execPopulate();
+    const { userID } = jwtValidated.decoded;
+    const skip = (page - 1) * limit;
+    const user = await User.findOne({ _id: userID }).select('short');
+    const totalLinks = user.short.length;
+    const totalPages = Math.ceil(user.short.length / limit);
+    await user
+      .populate({
+        path: 'short',
+        options: { limit, skip },
+        select: '-_id -__v',
+      })
+      .execPopulate();
 
-  return res.status(200).json({
-    info: {
-      page,
-      totalPages,
-      linksPerPage: limit,
-      totalLinks,
-    },
-    result: user.short,
-  });
+    return res.status(200).json({
+      info: {
+        page,
+        totalPages,
+        linksPerPage: limit,
+        totalLinks,
+      },
+      result: user.short,
+    });
+  } catch (error) {
+    return res.status(400).send('Error');
+  }
 });
