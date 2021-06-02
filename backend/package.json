@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js",
-    "eslint": "/backend/node_modules/.bin/eslint --init"
+    "start": "node src/index.js",
+    "eslint": "/backend/node_modules/.bin/eslint --init",
+    "startDev": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",

@@ -6,7 +6,7 @@ const { dbUrl } = process.env;
 
 // API PORT
 
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 // ENV KEYS
 
