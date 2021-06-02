@@ -9,10 +9,7 @@ import {
   StyledTd,
   Styles,
 } from "./styles";
-import {
-  FlexRowContainer,
-  FlexColumnContainer,
-} from "../../components/globalContainers";
+import { FlexRowContainer } from "../../components/globalContainers";
 
 const columns = [
   {
@@ -163,12 +160,12 @@ function Table({ columns, links, paginationSystem }) {
               }}
             >
               {">>"}
-            </button>{" "}
+            </button>
             <span>
               page {info.page} of {info.totalPages} pages
-            </span>{" "}
+            </span>
             <select
-              value={pagination.limit}
+              defaultValue={pagination.limit}
               onChange={(e) => {
                 setPagination((prev) => {
                   return { ...prev, limit: Number(e.target.value) };
@@ -176,17 +173,11 @@ function Table({ columns, links, paginationSystem }) {
               }}
             >
               <OptionsContainer>
-                {[5, 10, 20, 30, 40, 50].map((pageSize) =>
-                  pageSize === 5 ? (
-                    <option selected key={pageSize} value={pageSize}>
-                      Show {pageSize}
-                    </option>
-                  ) : (
-                    <option key={pageSize} value={pageSize}>
-                      Show {pageSize}
-                    </option>
-                  )
-                )}
+                {[5, 10, 20, 30, 40, 50].map((pageSize) => (
+                  <option key={pageSize} value={pageSize}>
+                    Show {pageSize}
+                  </option>
+                ))}
               </OptionsContainer>
             </select>
           </div>

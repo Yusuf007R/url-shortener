@@ -1,6 +1,6 @@
 //apiurl
 
-const baseUrl = "http://localhost:3001";
+const baseUrl = "https://urlty-api.herokuapp.com";
 const apiUrl = `${baseUrl}/api`;
 
 //generic error

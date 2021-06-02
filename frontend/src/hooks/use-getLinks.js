@@ -9,7 +9,6 @@ export const useGetLinks = () => {
         page: params.page,
         limit: params.limit,
       });
-      console.log(result);
       setLinksInfo(result);
     } catch (err) {
       return;

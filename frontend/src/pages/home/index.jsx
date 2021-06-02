@@ -5,7 +5,7 @@ import HomeContainer from "../../containers/homeContainer";
 const Home = () => {
   return (
     <Fragment>
-      <NavBar center={true} />
+      <NavBar />
       <HomeContainer />
     </Fragment>
   );

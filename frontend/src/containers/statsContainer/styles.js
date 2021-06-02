@@ -55,13 +55,10 @@ export const Styles = styled.div`
 `;
 
 export const Contianer = styled.div`
-  /* @media (min-width: 900px) { */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* overflow-x: auto; */
-  /* } */
   width: 100%;
 `;
 

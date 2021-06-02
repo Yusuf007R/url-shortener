@@ -90,6 +90,7 @@ function HomeContainer(props) {
                 <Anchor href={link.fullUrl}>{link.fullUrl}</Anchor>
                 <div>
                   <Anchor
+                    href={`${baseUrl}/${link.id}`}
                     onClick={() => {
                       navigator.clipboard.writeText(`${baseUrl}/${link.id}`);
                     }}

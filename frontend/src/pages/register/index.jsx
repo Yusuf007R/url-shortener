@@ -5,7 +5,7 @@ import RegisterContainer from "../../containers/registerContainer";
 const Register = () => {
   return (
     <div>
-      <NavBar center={true} />
+      <NavBar />
       <RegisterContainer />
     </div>
   );

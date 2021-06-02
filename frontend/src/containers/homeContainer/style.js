@@ -90,7 +90,7 @@ export const LinkContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 980px;
+  width: 1000px;
   background-color: white;
   box-sizing: border-box;
   border: none;
@@ -98,7 +98,7 @@ export const LinkContainer = styled.div`
   font-size: 18px;
   height: 60px;
   border-radius: 5px;
-  margin: 20px 0px 0px -30px;
+  margin-top: 20px;
   padding: 15px;
   @media (max-width: 1000px) {
     display: none;

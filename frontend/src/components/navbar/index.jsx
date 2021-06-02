@@ -1,75 +1,179 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   AnchorLogin,
   Navbar,
   Img,
   AnchorCenter,
-  DivSpaceAround,
   ImgContainer,
   AccountImg,
+  RespMenuContainer,
+  ButtonContainer,
+  StyledButton,
+  NavContainer,
+  StyledIMG,
+  MenuButtonContainer,
+  DropdownMenu,
+  InfoContainer,
+  ProfileImg,
+  ProfileName,
+  DropButtonContainer,
+  DropMenuButton,
 } from "./style";
 import logo from "../../assest/logo.png";
 import { StyledLink } from "../link";
 import accountSvg from "../../assest/account.svg";
 import { useLogin } from "../../hooks/use-login";
+import MenuButton from "../../assest/menuButton.svg";
+
+import { Transition } from "react-transition-group";
+
+const NavItems = (props) => {
+  const { logout, logged } = useLogin();
+  const [dropDownMenu, setDropDownMenu] = useState(true);
+  const { width } = props;
+  const breakPoint = width > 600;
+  return (
+    <Fragment>
+      <NavContainer {...props}>
+        {props.navMenu && (
+          <StyledButton
+            onClick={() => {
+              props.MenuToggler();
+            }}
+          >
+            ✖
+          </StyledButton>
+        )}
+        {(breakPoint || props.navMenu) && (
+          <Fragment>
+            <StyledLink to="/">
+              <AnchorCenter>Home</AnchorCenter>
+            </StyledLink>
+            {logged && (
+              <StyledLink to="/stats">
+                <AnchorCenter>Stats</AnchorCenter>
+              </StyledLink>
+            )}
+            <AnchorCenter href="https://github.com/Yusuf007R/urlShortener">
+              Github
+            </AnchorCenter>
+          </Fragment>
+        )}
+      </NavContainer>
+      {breakPoint || (props.toggleMenu && props.navMenu) ? (
+        <ButtonContainer {...props}>
+          {logged ? (
+            <Fragment>
+              <AccountImg
+                onClick={() => {
+                  setDropDownMenu((prev) => !prev);
+                }}
+                src={accountSvg}
+                alt="accountIMG"
+              ></AccountImg>
+              <Transition in={dropDownMenu} timeout={500}>
+                {(state) => {
+                  if (props.toggleMenu) state = "xd";
+                  return (
+                    <DropdownMenu state={state} resp={props.toggleMenu}>
+                      {!props.toggleMenu && (
+                        <InfoContainer>
+                          <ProfileImg
+                            src={
+                              "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+                            }
+                          ></ProfileImg>
+                          <ProfileName>Yusuf Rawat</ProfileName>
+                          <span>Member since Nov.2021</span>
+                        </InfoContainer>
+                      )}
+
+                      <DropButtonContainer>
+                        {!props.toggleMenu && (
+                          <StyledLink to="/stats">
+                            <DropMenuButton>Stats</DropMenuButton>
+                          </StyledLink>
+                        )}
+                        <DropMenuButton onClick={logout}>Logout</DropMenuButton>
+                      </DropButtonContainer>
+                    </DropdownMenu>
+                  );
+                }}
+              </Transition>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <StyledLink to="/login">
+                <AnchorLogin>Log in</AnchorLogin>
+              </StyledLink>
+              <StyledLink to="/register">
+                <AnchorLogin>Sign up</AnchorLogin>
+              </StyledLink>
+            </Fragment>
+          )}
+        </ButtonContainer>
+      ) : (
+        <MenuButtonContainer>
+          <StyledIMG
+            onClick={() => {
+              props.MenuToggler();
+            }}
+            src={MenuButton}
+            alt="menu button"
+          ></StyledIMG>
+        </MenuButtonContainer>
+      )}
+    </Fragment>
+  );
+};
 
 function NavBar(props) {
-  const { logout, logged } = useLogin();
-  const [width, setWidth] = React.useState(window.innerWidth);
-  const breakpoint = 550;
-  React.useEffect(() => {
+  const [toggleMenu, setToggleMenu] = useState(false);
+  const ToggleMenu = () => {
+    setToggleMenu((prev) => !prev);
+  };
+  const [width, setWidth] = useState(window.innerWidth);
+  const breakpoint = 600;
+  useEffect(() => {
     const handleResizeWindow = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResizeWindow);
     return () => {
       window.removeEventListener("resize", handleResizeWindow);
     };
   }, []);
-  return (
-    <Navbar>
-      <ImgContainer>
-        <StyledLink to="/">
-          <Img src={logo} alt="logo of the website" />
-        </StyledLink>
-      </ImgContainer>
-      <DivSpaceAround>
-        {props.center && (
-          <Fragment>
-            {width > breakpoint && (
-              <StyledLink to="/">
-                <AnchorCenter>Home</AnchorCenter>
-              </StyledLink>
-            )}
-            <StyledLink to="/stats">
-              <AnchorCenter>Stats</AnchorCenter>
-            </StyledLink>
-            <AnchorCenter href="https://github.com/Yusuf007R/urlShortener">
-              Github
-            </AnchorCenter>
-          </Fragment>
-        )}
-      </DivSpaceAround>
-      <DivSpaceAround>
-        {props.right && logged ? (
-          <AccountImg
-            onClick={logout}
-            src={accountSvg}
-            alt="accountIMG"
-          ></AccountImg>
-        ) : (
-          <Fragment>
-            {width > breakpoint && (
-              <StyledLink to="/login">
-                <AnchorLogin>Log in</AnchorLogin>
-              </StyledLink>
-            )}
 
-            <StyledLink to="/register">
-              <AnchorLogin>Sign up</AnchorLogin>
-            </StyledLink>
-          </Fragment>
-        )}
-      </DivSpaceAround>
-    </Navbar>
+  return (
+    <Fragment>
+      <Navbar>
+        <ImgContainer>
+          <StyledLink to="/">
+            <Img src={logo} alt="logo of the website" />
+          </StyledLink>
+        </ImgContainer>
+        <NavItems
+          {...props}
+          MenuToggler={ToggleMenu}
+          toggleMenu={toggleMenu}
+          navMenu={false}
+          width={width}
+        />
+      </Navbar>
+      {width < breakpoint && (
+        <Transition in={toggleMenu} timeout={500}>
+          {(state) => (
+            <RespMenuContainer state={state}>
+              <NavItems
+                navMenu={true}
+                MenuToggler={ToggleMenu}
+                width={width}
+                toggleMenu={toggleMenu}
+                {...props}
+              />
+            </RespMenuContainer>
+          )}
+        </Transition>
+      )}
+    </Fragment>
   );
 }
 
