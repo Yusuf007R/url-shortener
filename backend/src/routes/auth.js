@@ -68,13 +68,13 @@ app.post('/api/auth/login', async (req, res) => {
     const user = await User.findOne({ username: req.body.username }).select(
       '-short',
     );
-    if (user == null) return res.status(409).send('cannot find user');
+    if (user == null) return res.status(409).json({ notUser: true });
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match) {
       const result = login(user);
       return res.status(200).json(result);
     }
-    return res.status(403).send('wrong password');
+    return res.status(403).json({ wrongPass: true });
   } catch (error) {
     return handleError(res);
   }
@@ -92,7 +92,7 @@ app.get('/api/auth/accesstoken', async (req, res) => {
     if (dbToken == null) throw new Error();
     const info = { user: decoded.user, userID: decoded.userID };
     const accessToken = generateAccessToken(info);
-    res.status(200).json({ accessToken });
+    return res.status(200).json({ accessToken });
   } catch (error) {
     return handleError(res);
   }
@@ -102,6 +102,7 @@ app.post('/api/auth/logout', async (req, res) => {
   const { refreshToken } = req.body;
   try {
     await RefreshToken.deleteOne({ refreshToken });
+
     return res.status(200).json('success');
   } catch (error) {
     return handleError(res);

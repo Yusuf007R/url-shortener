@@ -13,6 +13,7 @@ const user = new Schema({
     unique: true,
   },
   password: String,
+  date: { type: Date, default: Date.now },
   short: [{ type: Schema.Types.ObjectId, ref: 'shortUrl' }],
 });
 
