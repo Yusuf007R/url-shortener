@@ -20,18 +20,21 @@ import {
   DropMenuButton,
 } from "./style";
 import logo from "../../assest/logo.png";
+import profilePicture from "../../assest/profilePicture.jpg";
 import { StyledLink } from "../link";
 import accountSvg from "../../assest/account.svg";
 import { useLogin } from "../../hooks/use-login";
 import MenuButton from "../../assest/menuButton.svg";
 
 import { Transition } from "react-transition-group";
+import { getUserData } from "../../services/getDataAPI";
 
 const NavItems = (props) => {
   const { logout, logged } = useLogin();
   const [dropDownMenu, setDropDownMenu] = useState(true);
   const { width } = props;
   const breakPoint = width > 600;
+
   return (
     <Fragment>
       <NavContainer {...props}>
@@ -78,13 +81,9 @@ const NavItems = (props) => {
                     <DropdownMenu state={state} resp={props.toggleMenu}>
                       {!props.toggleMenu && (
                         <InfoContainer>
-                          <ProfileImg
-                            src={
-                              "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
-                            }
-                          ></ProfileImg>
+                          <ProfileImg src={profilePicture}></ProfileImg>
                           <ProfileName>Yusuf Rawat</ProfileName>
-                          <span>Member since Nov.2021</span>
+                          <span>{props.userData.date}</span>
                         </InfoContainer>
                       )}
 
@@ -134,6 +133,34 @@ function NavBar(props) {
   };
   const [width, setWidth] = useState(window.innerWidth);
   const breakpoint = 600;
+  const [userData, setUserData] = useState({});
+  const userDataFunc = async () => {
+    const user = await getUserData();
+    let tempDate = new Date(user.date);
+    setUserData({
+      email: user.email,
+      date: `Member since ${
+        monthList[tempDate.getMonth()]
+      }.${tempDate.getFullYear()}`,
+    });
+  };
+  const monthList = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  useEffect(() => {
+    userDataFunc();
+  }, []);
   useEffect(() => {
     const handleResizeWindow = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResizeWindow);
@@ -152,6 +179,7 @@ function NavBar(props) {
         </ImgContainer>
         <NavItems
           {...props}
+          userData={userData}
           MenuToggler={ToggleMenu}
           toggleMenu={toggleMenu}
           navMenu={false}
@@ -163,6 +191,7 @@ function NavBar(props) {
           {(state) => (
             <RespMenuContainer state={state}>
               <NavItems
+                userData={userData}
                 navMenu={true}
                 MenuToggler={ToggleMenu}
                 width={width}

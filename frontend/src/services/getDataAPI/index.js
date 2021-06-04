@@ -18,5 +18,18 @@ const getShortLinks = async (params) => {
     return handleError(error.response);
   }
 };
+const getUserData = async () => {
+  try {
+    const result = await request({
+      method: "get",
+      url: "/getuserdata",
+    });
+    if (result.status === 200) {
+      return result.data;
+    }
+  } catch (error) {
+    return handleError(error.response);
+  }
+};
 
-export { getShortLinks };
+export { getShortLinks, getUserData };

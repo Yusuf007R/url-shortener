@@ -60,6 +60,13 @@ export const InputWrapper = styled.div`
 `;
 
 export const ErrorLabel = styled.label`
-  font-size: 12px;
+  font-size: 14px;
   color: red;
+  text-transform: capitalize;
+`;
+
+export const LabelContainer = styled.div`
+  margin: 0px 3px;
+  display: flex;
+  justify-content: space-between;
 `;

@@ -7,6 +7,8 @@ import {
   Title,
   Anchor,
   InputWrapper,
+  LabelContainer,
+  ErrorLabel,
 } from "../../components/formElements";
 import { loginRequest } from "../../services/authAPI";
 import {
@@ -19,6 +21,7 @@ import { StyledLink } from "../../components/link";
 function LoginContainer(props) {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const [errorLabel, setErrorLabel] = useState({});
   const history = useHistory();
 
   const SubmitHandler = async (event) => {
@@ -29,6 +32,9 @@ function LoginContainer(props) {
         history.push("/");
       }
     } catch (error) {
+      if (error.code === 403) return setErrorLabel({ pass: "wrong password." });
+      if (error.code === 409)
+        return setErrorLabel({ user: "cannot find user" });
       console.log(error);
     }
   };
@@ -43,7 +49,10 @@ function LoginContainer(props) {
       </ContainerText>
       <Form onSubmit={SubmitHandler}>
         <Separator></Separator>
-        <label>Email Address or Username:</label>
+        <LabelContainer>
+          <label>Email Address or Username:</label>
+          <ErrorLabel>{errorLabel.user}</ErrorLabel>
+        </LabelContainer>
         <InputWrapper>
           <FormInput
             onChange={(e) => {
@@ -52,7 +61,10 @@ function LoginContainer(props) {
             type="text"
           ></FormInput>
         </InputWrapper>
-        <label>Password:</label>
+        <LabelContainer>
+          <label>Password:</label>
+          <ErrorLabel>{errorLabel.pass}</ErrorLabel>
+        </LabelContainer>
         <InputWrapper>
           <FormInput
             onChange={(e) => {

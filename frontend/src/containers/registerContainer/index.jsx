@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Separator } from "../../components/separator";
@@ -11,6 +11,7 @@ import {
   PasswordStrengtWrapper,
   InputWrapper,
   ErrorLabel,
+  LabelContainer,
 } from "../../components/formElements";
 
 import { registerRequest } from "../../services/authAPI";
@@ -25,16 +26,8 @@ function RegisterContainer(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordStrenght, setPasswordStrenght] = useState({});
-  const [validEmail, setValidEmail] = useState(false);
-  const [taken, setTaken] = useState({});
-  // const [emailLabelError, setEmailLabelError] = useState("");
+  const [errorLabel, setErrorLabel] = useState({});
   const history = useHistory();
-
-  const emailVerify = (emailToVerify) => {
-    return setValidEmail(
-      new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(emailToVerify)
-    );
-  };
 
   const passwordVerify = (passwordToVerify) => {
     const hasNumber = new RegExp(/[0-9]/).test(passwordToVerify);
@@ -49,15 +42,10 @@ function RegisterContainer(props) {
     });
   };
 
-  useEffect(() => {
-    console.log(taken);
-  }, [taken]);
-
   const SubmitHandler = async (event) => {
     event.preventDefault();
-    console.log([passwordStrenght.all, validEmail]);
-    if (!(passwordStrenght.all && validEmail)) {
-      return console.log("xd");
+    if (!passwordStrenght.all) {
+      return setErrorLabel({ pass: "Low security password" });
     }
     try {
       const result = await registerRequest({ username, password, email });
@@ -66,8 +54,12 @@ function RegisterContainer(props) {
         history.push("/");
       }
     } catch (error) {
-      if (error.msg.emailTaken || error.msg.usernameTaken)
-        return setTaken(error.msg);
+      if (error.code === 409) {
+        if (error.msg.emailTaken)
+          return setErrorLabel({ email: "email already registered" });
+        if (error.msg.usernameTaken)
+          return setErrorLabel({ user: "username already taken" });
+      }
       console.log(error);
     }
   };
@@ -83,8 +75,11 @@ function RegisterContainer(props) {
       </ContainerText>
       <Form onSubmit={SubmitHandler}>
         <Separator></Separator>
-        <label>Username: </label>
-        {taken.usernameTaken && <ErrorLabel>Username Already Taken</ErrorLabel>}
+        <LabelContainer>
+          <label> Username:</label>
+          <ErrorLabel>{errorLabel.user}</ErrorLabel>
+        </LabelContainer>
+
         <InputWrapper>
           <FormInput
             onChange={(e) => {
@@ -93,18 +88,22 @@ function RegisterContainer(props) {
             type="text"
           ></FormInput>
         </InputWrapper>
-        <label>Email Address: </label>
-        {taken.emailTaken && <ErrorLabel>Email Already Taken</ErrorLabel>}
+        <LabelContainer>
+          <label>Email Address: </label>
+          <ErrorLabel>{errorLabel.email}</ErrorLabel>
+        </LabelContainer>
         <InputWrapper>
           <FormInput
+            type="email"
             onChange={(e) => {
-              emailVerify(e.target.value);
               setEmail(e.target.value);
             }}
-            type="text"
           ></FormInput>
         </InputWrapper>
-        <label>Password:</label>
+        <LabelContainer>
+          <label>Password: </label>
+          <ErrorLabel>{errorLabel.pass}</ErrorLabel>
+        </LabelContainer>
         <InputWrapper>
           <FormInput
             onChange={(e) => {

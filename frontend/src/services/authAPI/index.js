@@ -18,7 +18,6 @@ const loginRequest = async (data) => {
       return { data: result.data, ok: true };
     }
   } catch (error) {
-    console.log(error);
     return handleError(error.response);
   }
 };
@@ -44,18 +43,6 @@ const registerRequest = async (data) => {
   }
 };
 
-const tokenRequest = async () => {
-  try {
-    const result = await request({
-      method: "get",
-      url: "/auth/verifytoken",
-    });
-    if (result.status === 200) return result;
-  } catch (error) {
-    return error.response;
-  }
-};
-
 const accessToken = async (token) => {
   try {
     const result = await request({
@@ -68,5 +55,18 @@ const accessToken = async (token) => {
     return error.response;
   }
 };
+const logoutRequest = async (token) => {
+  try {
+    const result = await request({
+      method: "post",
+      url: "/auth/logout",
+      data: { refreshToken: token },
+    });
 
-export { loginRequest, registerRequest, tokenRequest, accessToken };
+    if (result.status === 200) return result;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export { loginRequest, registerRequest, accessToken, logoutRequest };

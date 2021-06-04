@@ -47,11 +47,10 @@ export const Form = styled.form`
     height: 60px;
   }
   @media (max-width: 600px) {
-    width: 300px;
+    width: 95vw;
     font-size: 15px;
     height: 120px;
     flex-direction: column;
-    margin-left: 0px;
   }
 `;
 
@@ -81,8 +80,10 @@ export const Button = styled.button`
   margin-left: 5px;
   color: white;
   @media (max-width: 600px) {
-    width: 30%;
-    height: 50px;
+    width: 100%;
+    height: 45px;
+    margin-left: 0px;
+    margin-top: 5px;
   }
 `;
 
