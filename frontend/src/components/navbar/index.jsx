@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import {
   AnchorLogin,
   Navbar,
@@ -134,6 +134,11 @@ function NavBar(props) {
   const [width, setWidth] = useState(window.innerWidth);
   const breakpoint = 600;
   const [userData, setUserData] = useState({});
+  const userDataFuncCallBack = useCallback(() => {
+    userDataFunc();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const userDataFunc = async () => {
     const user = await getUserData();
     let tempDate = new Date(user.date);
@@ -144,6 +149,7 @@ function NavBar(props) {
       }.${tempDate.getFullYear()}`,
     });
   };
+
   const monthList = [
     "Jan",
     "Feb",
@@ -159,8 +165,8 @@ function NavBar(props) {
     "Dec",
   ];
   useEffect(() => {
-    userDataFunc();
-  }, []);
+    userDataFuncCallBack();
+  }, [userDataFuncCallBack]);
   useEffect(() => {
     const handleResizeWindow = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResizeWindow);
