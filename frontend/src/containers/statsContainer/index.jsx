@@ -10,6 +10,7 @@ import {
   Styles,
 } from "./styles";
 import { FlexRowContainer } from "../../components/globalContainers";
+import { baseUrl } from "../../config";
 
 const columns = [
   {
@@ -47,8 +48,8 @@ const TableCell = ({ cell }) => {
     case "shortUrl":
       return (
         <StyledTd data-label={"Short URL"} {...cell.getCellProps()}>
-          <LinkAnchor href={`http://localhost:3001/${cell.value}`}>
-            {`http://localhost:3001/${cell.value}`}
+          <LinkAnchor href={`${baseUrl}/${cell.value}`}>
+            {`${baseUrl}/${cell.value}`}
           </LinkAnchor>
         </StyledTd>
       );

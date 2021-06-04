@@ -11,7 +11,7 @@ export const Styles = styled.div`
     }
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     table {
       thead {
         display: none;
@@ -70,7 +70,10 @@ export const LinkAnchor = styled.a`
   color: #786fa6;
   overflow: hidden;
   white-space: nowrap;
-  width: 250px;
+  width: 300px;
+  @media (max-width: 930px) {
+    width: 250px;
+  }
   &:hover {
     cursor: pointer;
   }
