@@ -30,7 +30,6 @@ import { Transition } from "react-transition-group";
 import { getUserData } from "../../services/getDataAPI";
 
 const NavItems = (props) => {
-  const { logout, logged } = useLogin();
   const [dropDownMenu, setDropDownMenu] = useState(true);
   const { width } = props;
   const breakPoint = width > 600;
@@ -52,7 +51,7 @@ const NavItems = (props) => {
             <StyledLink to="/">
               <AnchorCenter>Home</AnchorCenter>
             </StyledLink>
-            {logged && (
+            {props.logged && (
               <StyledLink to="/stats">
                 <AnchorCenter>Stats</AnchorCenter>
               </StyledLink>
@@ -65,7 +64,7 @@ const NavItems = (props) => {
       </NavContainer>
       {breakPoint || (props.toggleMenu && props.navMenu) ? (
         <ButtonContainer {...props}>
-          {logged ? (
+          {props.logged ? (
             <Fragment>
               <AccountImg
                 onClick={() => {
@@ -93,7 +92,9 @@ const NavItems = (props) => {
                             <DropMenuButton>Stats</DropMenuButton>
                           </StyledLink>
                         )}
-                        <DropMenuButton onClick={logout}>Logout</DropMenuButton>
+                        <DropMenuButton onClick={props.logout}>
+                          Logout
+                        </DropMenuButton>
                       </DropButtonContainer>
                     </DropdownMenu>
                   );
@@ -131,6 +132,7 @@ function NavBar(props) {
   const ToggleMenu = () => {
     setToggleMenu((prev) => !prev);
   };
+  const { logout, logged } = useLogin();
   const [width, setWidth] = useState(window.innerWidth);
   const breakpoint = 600;
   const [userData, setUserData] = useState({});
@@ -165,8 +167,8 @@ function NavBar(props) {
     "Dec",
   ];
   useEffect(() => {
-    userDataFuncCallBack();
-  }, [userDataFuncCallBack]);
+    if (logged) userDataFuncCallBack();
+  }, [userDataFuncCallBack, logged]);
   useEffect(() => {
     const handleResizeWindow = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResizeWindow);
@@ -185,6 +187,8 @@ function NavBar(props) {
         </ImgContainer>
         <NavItems
           {...props}
+          logged={logged}
+          logout={logout}
           userData={userData}
           MenuToggler={ToggleMenu}
           toggleMenu={toggleMenu}
@@ -197,6 +201,8 @@ function NavBar(props) {
           {(state) => (
             <RespMenuContainer state={state}>
               <NavItems
+                logged={logged}
+                logout={logout}
                 userData={userData}
                 navMenu={true}
                 MenuToggler={ToggleMenu}
